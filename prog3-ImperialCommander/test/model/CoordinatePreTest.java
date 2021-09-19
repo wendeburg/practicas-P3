@@ -16,7 +16,7 @@ import org.junit.Test;
 public class CoordinatePreTest {
 	
     List vcoordinates = new ArrayList<int[]>();
-    int []vcoor= {0,0,-70,-2,20}; //Para crear Coordinates
+    int []vcoor= {0,0,-70,-2,20,0}; //Para crear Coordinates
     final int DIM = vcoor.length;
     List<Coordinate> lcoor;
     
@@ -66,10 +66,12 @@ public class CoordinatePreTest {
 	@Test
 	public void testGetter() {
 		Coordinate c = lcoor.get(2);
+		Coordinate c2 = lcoor.get(4);
 		assertEquals("x==-70", -70, c.getX());
 		assertEquals("y==-2", -2, c.getY());
-
-		fail ("Prueba con otra coordenada y comprueba que los valores de 'x' e 'y' son correctos");
+		
+		assertEquals("x==5", 20, c2.getX());
+		assertEquals("y==0", 0, c2.getY());
 	}
 
 	
@@ -91,7 +93,14 @@ public class CoordinatePreTest {
 		assertEquals("y==-2", -2, c1.getY());
 
 		// haz pruebas similares con el otro método .add(x,y)
-		fail("completa el test con pruebas similares para el método .add(x,y)");
+		Coordinate cadd2 = c1.add(5, 10);
+		assertEquals("x==-65", -65, cadd2.getX());
+		assertEquals("y==8", 8, cadd2.getY());
+		
+		assertNotSame(c1,cadd2);
+		
+		assertEquals("x==-70", -70, c1.getX());
+		assertEquals("y==-2", -2, c1.getY());
 	}
 	
 	/* Se suman las Coordinate creadas en el setUp() y comprueba, conforme se van 
@@ -117,7 +126,10 @@ public class CoordinatePreTest {
 		    * - que el Coordinate que devuelve 'add' no es el mismo que
 	        *   el Coordinate que invocó al método.
 		    */
-		   fail ("Realiza las comprobaciones sugeridas anteriormente");
+		   assertEquals("x==sumx", sumx, caux1.getX());
+		   assertEquals("y==sumy", sumy, caux1.getY());
+		   
+		   assertNotSame(caux1, caux2);
 		}
 	}
 
@@ -139,17 +151,20 @@ public class CoordinatePreTest {
 	public void testEqualsObject() {
 		Object obj = new String("(0, 0)");
 		Coordinate c = lcoor.get(0);
+		Coordinate c2 = lcoor.get(1);
+		Coordinate c3 = lcoor.get(4);
+		Coordinate c4 = new Coordinate(0, 0);
 		// equals() devuelve falso cuando le paso null
 		assertFalse(c.equals(null));
 		// equals() devuelve falso cuando le paso un objeto que no es de tipo Coordinate
 		assertFalse(c.equals(obj));
-		
-		/* Sigue comprobando lo siguiente:
-		 *  1. equals() devuelve false cuando el valor de 'x' o 'y' es distinto
-		 *  2. equals() devuelve true cuando se compara un objeto Coordinate consigo mismo
-		 *  3. equals() devuelve true cuando comparo dos objetos Coordinate distintos
-		 *     y los valores de sus componentes respectivos son iguales.
-		 */
-		fail ("Completa el test equals()");
+		// equals() devuelve false cuando el valor de 'x' o 'y' es distinto
+		assertFalse(c.equals(c2)); // Cambio en x
+		assertFalse(c.equals(c3)); // Cambio en y
+		// equals() devuelve true cuando se compara un objeto Coordinate consigo mismo
+		assertTrue(c.equals(c));
+		// equals() devuelve true cuando comparo dos objetos Coordinate distintos
+		// y los valores de sus componentes respectivos son iguales.
+		assertTrue(c.equals(c4));
 	}
 }
