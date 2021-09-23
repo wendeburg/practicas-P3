@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * Clase Board: Un tablero. Dedfinido por su tamaño.
+ * @author Francisco Wendeburg - Y8281851W.
+ */
 public class Board {
 	
 	/**
@@ -15,7 +19,10 @@ public class Board {
 		this.size = size;
 	}
 
-	@Override
+	/**
+	 * Devuelve la representación en String de la clase Board.
+	 * @return String.
+	 */
 	public String toString() {
 		return "Board [size=" + size + "]";
 	}

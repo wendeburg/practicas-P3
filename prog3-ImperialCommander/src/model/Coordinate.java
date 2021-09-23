@@ -83,6 +83,7 @@ public class Coordinate {
 
 	/**
 	 * Genera el hashCode del objeto.
+	 * @return devuelve el hashCode (int).
 	 */
 	public int hashCode() {
 		final int prime = 31;
