@@ -1,10 +1,12 @@
 package model;
 
+import java.util.TreeSet;
+
 /**
  * Clase Coordinate: Una posición en un tablero. Toma un valor x y otro valor y. 
  * @author Francisco Wendeburg - Y8281851W.
  */
-public class Coordinate {
+public class Coordinate implements Comparable<Coordinate> {
     /**
      * Valor x de la coordenada.
      */
@@ -115,5 +117,51 @@ public class Coordinate {
                 return false;
             }
         }
-    }	
+    }
+    
+    /**
+     * Compara los valores x e y de la coordenada que llama al método con los del a coordenada
+     * pasada como argumento.
+     * @param un objeto de tipo coordinate.
+     * @return 1 si x > otra.x o si ambas x son iguales si y > otra.y. 0 si los valores x e y de las coordenadas son iguales. -1 si si x < otra.x o si ambas x son iguales si y < otra.y.
+     */
+    @Override
+    public int compareTo(Coordinate otra) {
+    	if (x < otra.x) {
+    		return -1;
+    	}
+    	else if (x == otra.x) {
+    		if (y < otra.y) {
+    			return -1;
+    		}
+    		else if (y == otra.y) {
+    			return 0;
+    		}
+    		else {
+    			return 1;
+    		}
+    	}
+    	else {
+    		return 1;
+    	}
+    }
+    
+    
+    /**
+     * Devuelve los 8 vecinos a la coordenada sobre la qeu se llama el método.
+     * @return TreeSet con las coordenadas vecinas.
+     */
+    public TreeSet<Coordinate> getNeighborhood() {
+    	TreeSet<Coordinate> tree = new TreeSet<Coordinate>();
+    	
+    	for (int i = -1; i < 2; i++) {
+    		for (int j = -1; j < 2; j++) {
+    			if (!(j == 0 && i == 0)) {
+    				tree.add(new Coordinate(x+i, y+j));
+    			}
+    		}
+    	}
+    	
+		return tree;
+    }
 }

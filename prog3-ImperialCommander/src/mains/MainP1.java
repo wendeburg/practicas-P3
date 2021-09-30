@@ -14,5 +14,8 @@ public class MainP1 {
 		System.out.println("c2="+c2);
 		System.out.println("c3="+c3);
 		System.out.println("c4="+c4);
+		
+		System.out.println("La neighborhood de c1 (5, 4)");
+		c1.getNeighborhood();
 	}	
 }
