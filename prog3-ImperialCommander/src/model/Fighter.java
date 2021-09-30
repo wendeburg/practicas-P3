@@ -139,6 +139,46 @@ public class Fighter {
 			return 1;
 		}
 	}
+
+	@Override
+	public String toString() {
+		String stringToReturn = "(" + type + " " + id + " " + this.getSide() + " ";
+		
+		if (position != null) {
+			stringToReturn += "[" + position.getX() + "," + position.getY() + "] ";
+		}
+		else {
+			stringToReturn += "null ";
+		}
+		
+		stringToReturn += "{" + velocity + "," + attack + "," + shield + "})";
+	
+		return stringToReturn;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Fighter other = (Fighter) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	
+	
 	
 	
 }
