@@ -98,7 +98,7 @@ public class Coordinate implements Comparable<Coordinate> {
     /**
      * Compara el objeto actual con el que se pasa por parámetros para determinar la igualdad.
      * @param obj objeto de cualquier tipo.
-     * @return true si las coordenadas x e y de ambos objetos coinciden, falso en cualqueir otro caso.
+     * @return true si las coordenadas x e y de ambos objetos coinciden, false en cualqueir otro caso.
      */
     public boolean equals(Object obj) {
         if (obj == this) return true;
