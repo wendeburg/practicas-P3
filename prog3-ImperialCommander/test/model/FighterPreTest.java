@@ -205,8 +205,15 @@ public class FighterPreTest {
 		 * cambia los valores de los atributos del fighter y comprueba 
 		 * que en toString se reflejan los cambios
 		 */
+		Coordinate c = new Coordinate(1,1);
 		
-		fail("completa el test");
+		fighter.addAttack(-90);
+		fighter.addShield(100);
+		fighter.addVelocity(200);
+		fighter.setPosition(c);
+		
+		final String sout = "(XWing 1 REBEL [1,1] {300,0,180})";
+		assertEquals(sout, fighter.toString());
 	}
 	
 	
@@ -230,7 +237,10 @@ public class FighterPreTest {
 		/*
 		 * similar al anterior, pero al revés
 		 */
-		fail("completa el test");
+		Fighter enemy = new Fighter("TIEFighter", imperialShip);
+		fighter.addShield(-150);
+		assertEquals(0,fighter.fight(enemy));
+		assertEquals(0,RandomNumber.getRandomNumberList().size());
 	}
 	
 	/* Test que combrueba Fight en la lucha entre un caza y un enemigo que tienen
@@ -253,7 +263,12 @@ public class FighterPreTest {
 		 * cambia algunos valores del caza (velocidad, ataque, escudo) y
 		 * comprueba que afectan a la lucha
 		 */
-		fail("completa el test");
+		Fighter enemy = new Fighter("TIEFighter", imperialShip);
+		fighter.addShield(3000);
+		enemy.addAttack(1500);
+		assertEquals(1,fighter.fight(enemy));
+		// La pelea es más larga y se requieren más números, pero se los que están se generan correctamente.
+		//assertEquals("[85, 88, 47, 13, 54, 4, 34, 6]",RandomNumber.getRandomNumberList().toString());
 	}
 		
 	/* Test equals for Fighter

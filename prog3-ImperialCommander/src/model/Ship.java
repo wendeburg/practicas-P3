@@ -1,16 +1,41 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class Ship {
+	/**
+	 * Nombre de la nave.
+	 */
 	private String name;
+	
+	/**
+	 * Victorias que tiene la nave.
+	 */
 	private int wins;
+	
+	/**
+	 * Derrotas que tiene la nave.
+	 */
 	private int losses;
+	
+	/**
+	 * Side de la nave (REBEL/IMPERIAL).
+	 */
 	private Side side;
+	
+	/**
+	 * Flota (conjunto de cazas) de la nave.
+	 */
 	private ArrayList<Fighter> fleet;
 	
+	/**
+	 * Constructor de la clase Ship. Establece wins y losses a 0, side y
+	 * name según los parámetros pasados.
+	 * @param name nombre de la nave.
+	 * @param side Side de la nave /(REBEL/IMPERIAL).
+	 */
 	public Ship(String name, Side side) {
 		this.name = name;
 		this.side = side;
@@ -19,26 +44,50 @@ public class Ship {
 		fleet = new ArrayList<Fighter>();
 	}
 
+	/**
+	 * Getter.
+	 * @return el nombre de la nave.
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	/**
+	 * Getter.
+	 * @return el Side la nave.
+	 */
 	public Side getSide() {
 		return side;
 	};
 
+	/**
+	 * Getter.
+	 * @return el número de victorias de la nave.
+	 */
 	public int getWins() {
 		return wins;
 	}
 
+	/**
+	 * Getter.
+	 * @return el número de derrotas de la nave.
+	 */
 	public int getLosses() {
 		return losses;
 	}
 	
+	/**
+	 * Getter.
+	 * @return la flota de cazas de la nave.
+	 */
 	public List<Fighter> getFleetTest() {
 		return fleet;
 	}
 	
+	/**
+	 * Añade las naves pasadas en formato string a la flota de la nave.
+	 * @param fd String con un formato establecido.
+	 */
 	public void addFighters(String fd) {
 		String strings[] = fd.split(":");
 		
@@ -53,30 +102,54 @@ public class Ship {
 		}
 	}
 	
+	/**
+	 * Sume 1 a las victorias si r = 1, suma uno a las derrotas si r = -1,
+	 * no hace nada con cualquier otro valor.
+	 * @param r resultado de una batalla.
+	 */
 	public void updateResults(int r) {
 		if (r == 1) wins++;
 		if (r == -1) losses++;
 	}
 	
+	/**
+	 * Devuelve un caza no destruido.
+	 * @param type tipo del caza que se quiere.
+	 * @return un caza del tipo pedido si el parámetro type no está vacío,
+	 * un caza de cualquier tipo si lo está y en el caso de que no se encuentre
+	 * ningún caza se devuelve null.
+	 */
 	public Fighter getFirstAvailableFighter(String type) {
 		for (int i = 0; i < fleet.size(); i++) {
 			if (!(fleet.get(i).isDestroyed())) {
 				if (type.length() == 0) {
 					return fleet.get(i);	
 				}
-				else if (fleet.get(i).getType() == type) {
+				else if (fleet.get(i).getType().contentEquals(type)) {
 					return fleet.get(i);
 				}
 			}
 		}
-		
+
 		return null;
 	}
 	
+	/**
+	 * Elimina de la flota los cazas destruidos.
+	 */
 	public void purgeFleet() {
-		fleet = null;
+		for (int i = 0; i < fleet.size(); i++) {
+			if (fleet.get(i).isDestroyed()) {
+				fleet.remove(i);
+			}
+		}
 	}
 	
+	/**
+	 * Devuelve una string que es la representación de la flota de cazas
+	 * de la nave.
+	 * @return una String que contiene información sobre cada caza de la flota.
+	 */
 	public String showFleet() {
 		StringBuilder sb = new StringBuilder();
 		
@@ -94,12 +167,18 @@ public class Ship {
 	}
 	
 	
+	/**
+	 * Devuelve información sobre la flota.
+	 * @return una String con información sonre cuantos cazas de
+	 * cada tipo hay.
+	 */
 	public String myFleet() {
-		HashMap<String, Integer> hm = new HashMap<String, Integer>();
+		// Se utiliza un LinkedHashMap para que se conserve el orden de las keys.
+		LinkedHashMap<String, Integer> hm = new LinkedHashMap<String, Integer>();
 		StringBuilder sb = new StringBuilder();
 		String type;
 		
-		if (fleet.size() == 0) return null;
+		if (fleet.size() == 0) return "";
 		
 		// Cuenta los cazas de cada tipo.
 		for (int i = 0; i < fleet.size(); i++) {
@@ -124,10 +203,15 @@ public class Ship {
 		if (sbString.charAt(sbString.length() - 1) == ':') {
 			sb.setLength(sbString.length() - 1);
 		}
-		
+
 		return sb.toString();
 	}
 
+	/**
+	 * Devuelve la representación de String de la clase.
+	 * @return una String con información sobre el nombre, victorias,
+	 * derrotas y sobre la flota (myFleet) de la nave.
+	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
