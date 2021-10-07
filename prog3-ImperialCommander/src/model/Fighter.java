@@ -185,7 +185,7 @@ public class Fighter {
 		int newVel = this.velocity + velocity;
 		
 		if (newVel >= 0) {
-			this.velocity = velocity;
+			this.velocity += velocity;
 		}
 		else {
 			this.velocity = 0;
@@ -196,15 +196,8 @@ public class Fighter {
 	 * Añade el escudo pasado como parámetro al actual del caza.
 	 * @param shield escudo a sumar.
 	 */
-	public void addShield(int shield) {
-		int newShield = this.shield + shield;
-		
-		if (newShield >= 0) {
-			this.shield = newShield;
-		}
-		else {
-			this.shield = 0;
-		}
+	public void addShield(int shield) {		
+		this.shield += shield;
 	}
 	
 	/**
@@ -243,7 +236,7 @@ public class Fighter {
 				enemy.addShield(-this.getDamage(n, enemy)); // Se resta??.			
 			}
 			else {
-				this.addShield(-(100-n));
+				this.addShield(-(enemy.getDamage(100-n, this)));
 			}			
 		} while(!(this.isDestroyed() || enemy.isDestroyed()));
 	
