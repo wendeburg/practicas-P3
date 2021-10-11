@@ -32,18 +32,22 @@ public class Board {
 	}
 	
 	public Fighter getFighter(Coordinate c) {
-		return new Fighter(board.get(c));
+		if (board.get(c) != null) {
+			return new Fighter(board.get(c));
+		}
+		
+		return null;
 	}
 	
-	public boolean removeFighter(Fighter f) {
+	public boolean removeFighter(Fighter f) {	
+		if (board.get(f.getPosition()) != null) {
+			if (board.get(f.getPosition()).equals(f)) {
+				board.remove(f.getPosition());
+				return true;
+			}
+		}
 		
-		if (board.get(f.getPosition()).equals(f)) {
-			board.remove(f.getPosition());
-			return true;
-		}
-		else {
-			return false;
-		}
+		return false;
 	}
 	
 	public boolean inside(Coordinate c) {
@@ -116,6 +120,8 @@ public class Board {
 				}
 			}
 		}
+		
+		return tree;
 	}
 	
     public TreeSet<Coordinate> getNeighborhood(Coordinate c) {
@@ -158,6 +164,44 @@ public class Board {
     	}
     	else {
     		return 0;
+    	}
+    }
+    
+    private boolean isInBoard(Fighter f) {
+    	boolean inBoard = false;
+    	
+    	for (Coordinate k : board.keySet()) {
+    		if (board.get(k).equals(f)) {
+    			inBoard = true;
+    			break;
+    		}
+    	}
+    	
+    	return inBoard;
+    }
+    
+    public void patrol(Fighter f) {
+    	if (isInBoard(f)) {
+    		TreeSet<Coordinate> n = getNeighborhood(f.getPosition());
+    		
+    		for (Coordinate c : n) {
+    			if (!(board.get(c) == null)) {
+    				if (board.get(c).getSide() != f.getSide()) {
+    	   				if (f.fight(board.get(c)) == 1) {
+        					f.getMotherShip().updateResults(1);
+        					board.get(c).getMotherShip().updateResults(-1);
+        					board.get(c).setPosition(null);
+        	    			board.put(c, null);
+        				}
+    	   				else {
+        					f.getMotherShip().updateResults(-1);
+        					board.get(c).getMotherShip().updateResults(1);
+    	   					f.setPosition(null);
+    	   					board.put(f.getPosition(), null);
+    	   				}
+    				}
+    			}
+    		}
     	}
     }
 
