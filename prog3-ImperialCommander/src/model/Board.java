@@ -125,7 +125,8 @@ public class Board {
 	}
 	
     public TreeSet<Coordinate> getNeighborhood(Coordinate c) {
-    	// No se comprueba que la coord esté en el tablero.
+    	Objects.requireNonNull(c);
+
     	if (isCoordACorner(c)) {
     		return getCornerNeighborhood(c);
     	}
@@ -135,6 +136,9 @@ public class Board {
     }
     
     public int launch(Coordinate c, Fighter f) {
+    	Objects.requireNonNull(c);
+    	Objects.requireNonNull(f);
+    	
     	if (inside(c)) {
     		if (!(board.get(c) == null)) {
     			if (!(board.get(c).getSide() == f.getSide())) {
@@ -168,7 +172,7 @@ public class Board {
     	}
     }
     
-    private boolean isInBoard(Fighter f) {
+    private boolean isFighterInBoard(Fighter f) {
     	boolean inBoard = false;
     	
     	for (Coordinate k : board.keySet()) {
@@ -182,7 +186,9 @@ public class Board {
     }
     
     public void patrol(Fighter f) {
-    	if (isInBoard(f)) {
+    	Objects.requireNonNull(f);
+    	
+    	if (isFighterInBoard(f)) {
     		TreeSet<Coordinate> n = getNeighborhood(f.getPosition());
     		
     		for (Coordinate c : n) {
