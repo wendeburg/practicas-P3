@@ -125,6 +125,7 @@ public class Board {
 	}
 	
     public TreeSet<Coordinate> getNeighborhood(Coordinate c) {
+    	// No se comprueba que la coord esté en el tablero.
     	if (isCoordACorner(c)) {
     		return getCornerNeighborhood(c);
     	}
@@ -185,6 +186,10 @@ public class Board {
     		TreeSet<Coordinate> n = getNeighborhood(f.getPosition());
     		
     		for (Coordinate c : n) {
+    			if (f.isDestroyed() == true) {
+    				break;
+    			}
+    			
     			if (!(board.get(c) == null)) {
     				if (board.get(c).getSide() != f.getSide()) {
     	   				if (f.fight(board.get(c)) == 1) {
@@ -196,8 +201,8 @@ public class Board {
     	   				else {
         					f.getMotherShip().updateResults(-1);
         					board.get(c).getMotherShip().updateResults(1);
-    	   					f.setPosition(null);
-    	   					board.put(f.getPosition(), null);
+        					board.remove(f.getPosition());
+        					f.setPosition(null);
     	   				}
     				}
     			}

@@ -80,7 +80,9 @@ public class BoardPreTest {
 	 */
 	@Test
 	public void testRemoveFighter2() {
-		fail("completa el test");		
+		rebelShip.addFighters("1/XWing");
+		Fighter fighter = rebelShip.getFleetTest().get(0);
+		assertFalse (board.removeFighter(fighter));			
 	}
 
 
@@ -118,10 +120,21 @@ public class BoardPreTest {
 	
 	@Test
 	public void testInsideFalse() {
-		assertFalse (board.inside (new Coordinate(-1,0)));
-		// assertFalse ....
+		assertFalse(board.inside (new Coordinate(-1,0)));
+		assertFalse(board.inside (new Coordinate(-1,-1)));
+		assertFalse(board.inside (new Coordinate(0,-1)));
 		
-	    fail("completa el test");
+		assertFalse(board.inside (new Coordinate(10,9)));
+		assertFalse(board.inside (new Coordinate(9,10)));
+		assertFalse(board.inside (new Coordinate(10,10)));
+		
+		assertFalse(board.inside (new Coordinate(10,0)));
+		assertFalse(board.inside (new Coordinate(9,-1)));
+		assertFalse(board.inside (new Coordinate(10,-1)));
+		
+		assertFalse(board.inside (new Coordinate(0,10)));
+		assertFalse(board.inside (new Coordinate(-1,9)));
+		assertFalse(board.inside (new Coordinate(-1,10)));
 	}
 
 	/* Test getNeighborhood para la esquina superior izquierdo de un tablero */
@@ -138,7 +151,11 @@ public class BoardPreTest {
 	/* Test getNeighborhood para la esquina inferior derecho de un tablero 10x10*/
 	@Test
 	public void testGetNeighborhood2() {
-		fail("completa el test");
+		Set<Coordinate> set = board.getNeighborhood(new Coordinate(9,9));
+		assertEquals(3, set.size());
+		assertTrue(set.contains(new Coordinate(8, 8)));
+		assertTrue(set.contains(new Coordinate(8, 9)));
+		assertTrue(set.contains(new Coordinate(9, 8)));
 	}
 	
 	/* Test getNeighborhood para una coordenada central al tablero*/
@@ -174,7 +191,18 @@ public class BoardPreTest {
 	 * mismo bando (debe devolver 0 y no colocar el caza) */
 	@Test
 	public void testLaunch3() {	
-		fail("completa el test");
+		rebelShip.addFighters("1/XWing");
+		rebelShip.addFighters("1/YWing");
+		Fighter f = rebelShip.getFleetTest().get(0);
+		Fighter f2 = rebelShip.getFleetTest().get(1);
+		Coordinate c = new Coordinate(9,9);
+		
+		board.launch(c,f);
+		
+		assertEquals(0,board.launch(c,f2));
+		assertEquals(f, board.getFighter(c));
+		assertTrue(c.equals(f.getPosition()));
+		assertTrue(f2.getPosition() == null);
 	}
 	
 	/* Test launch para una coordenada dentro del tablero donde ya hay otro caza del
@@ -197,7 +225,8 @@ public class BoardPreTest {
 		/*
 		 * comprueba que se actualizan las estadísticas de victorias/derrotas de las naves
 		 */
-		fail("completa el test");
+		assertEquals(1, frebel.getMotherShip().getWins());
+		assertEquals(1, fimperial.getMotherShip().getLosses());
 	}
 	
 	
@@ -263,7 +292,9 @@ public class BoardPreTest {
 		board.launch(c,rebel); 
 		board.patrol(rebel); 
 
-		fail("completa el test como se indica en el comentario");
+		assertEquals(5, rebel.getMotherShip().getWins());
+		assertEquals(1, rebel.getMotherShip().getLosses());
+		assertTrue(rebel.getShield() <= 0);
 	}
 	
 	

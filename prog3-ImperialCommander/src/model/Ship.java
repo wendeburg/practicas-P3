@@ -138,11 +138,15 @@ public class Ship {
 	 * Elimina de la flota los cazas destruidos.
 	 */
 	public void purgeFleet() {
+		ArrayList<Fighter> auxFleet = new ArrayList<Fighter>();
+		
 		for (int i = 0; i < fleet.size(); i++) {
-			if (fleet.get(i).isDestroyed()) {
-				fleet.remove(i);
+			if (!fleet.get(i).isDestroyed()) {
+				auxFleet.add(fleet.get(i));
 			}
 		}
+		
+		fleet = auxFleet;
 	}
 	
 	/**
