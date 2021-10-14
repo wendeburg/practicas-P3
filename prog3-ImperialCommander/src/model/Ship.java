@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+/**
+ * Clase Ship: una nave que contiene una flota de cazas.
+ * @author @author Francisco Wendeburg - Y8281851W.
+ *
+ */
 public class Ship {
 	/**
 	 * Nombre de la nave.
