@@ -16,6 +16,9 @@ public class Board {
 	 */
 	private int size;
 	
+	/**
+	 * Mapa para almacenar los cazas en el tablero.
+	 */
 	private Map<Coordinate,Fighter> board;
 	
 	/**
@@ -27,10 +30,22 @@ public class Board {
 		board = new HashMap<Coordinate,Fighter>();
 	}
 	
+	
+	/**
+	 * Getter.
+	 * @return el tamaño del tablero.
+	 */
 	public int getSize() {
 		return size;
 	}
 	
+	
+	/**
+	 * Getter.
+	 * @param c coordenada de la que se queire obtener el caza.
+	 * @return devuelve una copia del caza que se encuentra en la coordinada indicada.
+	 * Si no hay ningún caza en la coordenada devuelve null.
+	 */
 	public Fighter getFighter(Coordinate c) {
 		if (board.get(c) != null) {
 			return new Fighter(board.get(c));
@@ -39,6 +54,11 @@ public class Board {
 		return null;
 	}
 	
+	/**
+	 * Remueve el caza del tablero si el caza situado en la posición del caza pasado como parámetro son iguales.
+	 * @param f caza que se quiere remover del tablero.
+	 * @return true si se remueve del tablero, false en cualquier otro caso.
+	 */
 	public boolean removeFighter(Fighter f) {	
 		if (board.get(f.getPosition()) != null) {
 			if (board.get(f.getPosition()).equals(f)) {
@@ -50,6 +70,11 @@ public class Board {
 		return false;
 	}
 	
+	/**
+	 * Comprueba si una coordenada está dentro del tablero.
+	 * @param c coordenada que se quiere comprobar si está dentro del tablero.
+	 * @return true si la coordenada está dentro del tablero, false en cualquier otro caso.
+	 */
 	public boolean inside(Coordinate c) {
 		if (c == null) return false;
 		
@@ -62,6 +87,11 @@ public class Board {
 		return false;
 	}
 	
+	/**
+	 * Comprueba si una coordenada está en una esquina del tablero.
+	 * @param c coordenada que se queire comprobar si está en una esquina del tablero.
+	 * @return true si la coordenada está en una esquina del tablero, false en otro caso.
+	 */
 	private boolean isCoordACorner(Coordinate c) {
 		if (c.getX() == 0 && c.getY() == 0) {
 			return true;
@@ -80,6 +110,11 @@ public class Board {
 		}
 	}
 	
+	/**
+	 * Getter.
+	 * @param c esquina de la que se queire las coordenadas vecinas.
+	 * @return devuelve las coordenadas vecinas de una esquina.
+	 */
 	private TreeSet<Coordinate> getCornerNeighborhood(Coordinate c) {
 		TreeSet<Coordinate> tree = new TreeSet<Coordinate>();
 		int i, j;
@@ -124,6 +159,11 @@ public class Board {
 		return tree;
 	}
 	
+	/**
+	 * Devuelve las coordenadas vecinas de la que se pasa como argumento.
+	 * @param c coordenada de la que se queire las coordenadas vecinas.
+	 * @return TreeSet de las coordenadas vecinas.
+	 */
     public TreeSet<Coordinate> getNeighborhood(Coordinate c) {
     	Objects.requireNonNull(c);
 
@@ -144,6 +184,12 @@ public class Board {
     	}
     }
     
+    /**
+     * Intenta colocar un caza en el tablero.
+     * @param c posición en la que se queire colocar el caza indicado.
+     * @param f caza que se quiere colocar en la posición indicada.
+     * @return Devuelve 1 si se ha colocado, 0 en cualquier otro caso.
+     */
     public int launch(Coordinate c, Fighter f) {
     	Objects.requireNonNull(c);
     	Objects.requireNonNull(f);
@@ -181,6 +227,11 @@ public class Board {
     	}
     }
     
+    /**
+     * Comprueba que el caza indicado esé en el tablero.
+     * @param f caza que se queire saber si está en el tablero.
+     * @return true si el caza está en el tablerom false en otro caso.
+     */
     private boolean isFighterInBoard(Fighter f) {
     	boolean inBoard = false;
     	
@@ -194,6 +245,10 @@ public class Board {
     	return inBoard;
     }
     
+    /**
+     * Recorre la vecindad del caza luchando con los enemigos que se encuentre en el camino hasta ser destruído o terminar el recorrido.
+     * @param f caza que recorre su vecindad.
+     */
     public void patrol(Fighter f) {
     	Objects.requireNonNull(f);
     	
@@ -224,12 +279,4 @@ public class Board {
     		}
     	}
     }
-
-	/**
-	 * Devuelve la representación en String de la clase Board.
-	 * @return String.
-	 */
-	public String toString() {
-		return "Board [size=" + size + "]";
-	}
 }
