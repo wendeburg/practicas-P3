@@ -131,7 +131,16 @@ public class Board {
     		return getCornerNeighborhood(c);
     	}
     	else {
-        	return c.getNeighborhood();
+        	TreeSet<Coordinate> cNeigh = c.getNeighborhood();
+        	TreeSet<Coordinate> cNeighInside = new TreeSet<Coordinate>();
+        	
+        	for (Coordinate coord : cNeigh) {
+        		if (inside(coord)) {
+        			cNeighInside.add(coord);
+        		}
+        	}
+        	
+        	return cNeighInside;
     	}
     }
     
