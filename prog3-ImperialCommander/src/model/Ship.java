@@ -191,12 +191,14 @@ public class Ship {
 		
 		// Cuenta los cazas de cada tipo.
 		for (int i = 0; i < fleet.size(); i++) {
-			type = fleet.get(i).getType();
-			if (hm.containsKey(type)) {
-				hm.put(type, hm.get(type) + 1);
-			}
-			else {
-				hm.put(type, 1);
+			if (!fleet.get(i).isDestroyed()) {
+				type = fleet.get(i).getType();
+				if (hm.containsKey(type)) {
+					hm.put(type, hm.get(type) + 1);
+				}
+				else {
+					hm.put(type, 1);
+				}
 			}
 		}
 		

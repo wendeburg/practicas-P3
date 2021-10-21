@@ -47,6 +47,8 @@ public class Board {
 	 * Si no hay ningún caza en la coordenada devuelve null.
 	 */
 	public Fighter getFighter(Coordinate c) {
+		Objects.requireNonNull(c);
+		
 		if (board.get(c) != null) {
 			return new Fighter(board.get(c));
 		}
@@ -59,7 +61,9 @@ public class Board {
 	 * @param f caza que se quiere remover del tablero.
 	 * @return true si se remueve del tablero, false en cualquier otro caso.
 	 */
-	public boolean removeFighter(Fighter f) {	
+	public boolean removeFighter(Fighter f) {
+		Objects.requireNonNull(f);
+		
 		if (board.get(f.getPosition()) != null) {
 			if (board.get(f.getPosition()).equals(f)) {
 				board.remove(f.getPosition());
@@ -262,13 +266,14 @@ public class Board {
     			
     			if (!(board.get(c) == null)) {
     				if (board.get(c).getSide() != f.getSide()) {
-    	   				if (f.fight(board.get(c)) == 1) {
+    					int fightResult = f.fight(board.get(c));
+    	   				if (fightResult == 1) {
         					f.getMotherShip().updateResults(1);
         					board.get(c).getMotherShip().updateResults(-1);
         					board.get(c).setPosition(null);
         	    			board.put(c, null);
         				}
-    	   				else {
+    	   				else if (fightResult == -1){
         					f.getMotherShip().updateResults(-1);
         					board.get(c).getMotherShip().updateResults(1);
         					board.remove(f.getPosition());
