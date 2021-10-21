@@ -67,6 +67,7 @@ public class Board {
 		if (board.get(f.getPosition()) != null) {
 			if (board.get(f.getPosition()).equals(f)) {
 				board.remove(f.getPosition());
+				f.setPosition(null);
 				return true;
 			}
 		}
@@ -204,6 +205,7 @@ public class Board {
     				if (f.fight(board.get(c)) == 1) {
     					f.getMotherShip().updateResults(1);
     					board.get(c).getMotherShip().updateResults(-1);
+    					removeFighter(board.get(c));
     	    			board.put(c, f);
     	    			f.setPosition(c);
     	    			
@@ -270,14 +272,12 @@ public class Board {
     	   				if (fightResult == 1) {
         					f.getMotherShip().updateResults(1);
         					board.get(c).getMotherShip().updateResults(-1);
-        					board.get(c).setPosition(null);
-        	    			board.put(c, null);
+        	    			removeFighter(board.get(c));
         				}
     	   				else if (fightResult == -1){
         					f.getMotherShip().updateResults(-1);
         					board.get(c).getMotherShip().updateResults(1);
-        					board.remove(f.getPosition());
-        					f.setPosition(null);
+        					removeFighter(f);
     	   				}
     				}
     			}
