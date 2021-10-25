@@ -211,8 +211,10 @@ public class Ship {
 		
 		String sbString = sb.toString();
 		
-		if (sbString.charAt(sbString.length() - 1) == ':') {
-			sb.setLength(sbString.length() - 1);
+		if (sbString.length() > 0) {
+			if (sbString.charAt(sbString.length() - 1) == ':') {
+				sb.setLength(sbString.length() - 1);
+			}	
 		}
 
 		return sb.toString();
