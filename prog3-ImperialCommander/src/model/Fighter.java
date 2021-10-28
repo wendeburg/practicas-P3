@@ -4,7 +4,7 @@ package model;
  * Clase Fighter: Un caza.
  * @author Francisco Wendeburg - Y8281851W.
  */
-public class Fighter {
+public abstract class Fighter {
 	/**
 	 * Constante por que se utiliza para calcvular el daño hecho a una nave.
 	 */
@@ -14,11 +14,6 @@ public class Fighter {
 	 * Muestra la ID que va a tener el siguiente caza que se cree.
 	 */
 	private static int nextId = 1;
-	
-	/**
-	 * El tipo de caza.
-	 */
-	private String type;
 	
 	/**
 	 * La velocidad del caza.
@@ -55,14 +50,13 @@ public class Fighter {
 	 * @param type tipo de caza.
 	 * @param mother nave de la que sale el caza.
 	 */
-	Fighter(String type, Ship mother) {
+	protected Fighter(Ship mother) {
 		id = nextId;
 		nextId++;
 		
 		velocity = 100;
 		attack = 80;
 		shield = 80;
-		this.type = type;
 		position = null;
 		motherShip = mother;
 	}
@@ -72,12 +66,11 @@ public class Fighter {
 	 * Constructor de copia.
 	 * @param f Fighter cuyos atributos se van a copiar.
 	 */
-	public Fighter(Fighter f) {
+	protected Fighter(Fighter f) {
 		id = f.id;
 		velocity = f.velocity;
 		attack = f.attack;
 		shield = f.shield;
-		type = f.type;
 		position = f.position;
 		motherShip = f.motherShip;
 	}
@@ -94,7 +87,7 @@ public class Fighter {
 	 * @return una string con el tipo de caza.
 	 */
 	public String getType() {
-		return type;
+		return getClass().getSimpleName();
 	}
 	
 	
@@ -254,7 +247,7 @@ public class Fighter {
      */
 	@Override
 	public String toString() {
-		String stringToReturn = "(" + type + " " + id + " " + this.getSide() + " ";
+		String stringToReturn = "(" + getType() + " " + id + " " + this.getSide() + " ";
 		
 		if (position != null) {
 			stringToReturn += position.toString() + " ";
@@ -299,7 +292,8 @@ public class Fighter {
 		return true;
 	}
 	
-	
-	
+    public abstract Fighter copy();
+
+    public abstract char getSymbol();
 	
 }
