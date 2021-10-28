@@ -1,5 +1,7 @@
 package model;
 
+import model.exceptions.FighterIsDestroyedException;
+
 /**
  * Clase Fighter: Un caza.
  * @author Francisco Wendeburg - Y8281851W.
@@ -216,17 +218,22 @@ public abstract class Fighter {
 	 * @param enemy enemigo contra quien se pelea.
 	 * @return 1 si gana el caza que llama a la función, -1 si gana el enemigo.
 	 */
-	public int fight(Fighter enemy) {
+	public int fight(Fighter enemy) throws FighterIsDestroyedException {
 		int n, umbral;
 		
-		if (this.isDestroyed() || enemy.isDestroyed()) return 0;
+		if (this.isDestroyed()) {
+			throw new FighterIsDestroyedException(this);
+		}
+		else if (enemy.isDestroyed()) {
+			throw new FighterIsDestroyedException(enemy);
+		}
 		
 		do {
 			n = RandomNumber.newRandomNumber(100);
 			umbral = (velocity*100)/(velocity + enemy.velocity);
 			
 			if (umbral <= n) {
-				enemy.addShield(-this.getDamage(n, enemy)); // Se resta??.			
+				enemy.addShield(-this.getDamage(n, enemy));			
 			}
 			else {
 				this.addShield(-(enemy.getDamage(100-n, this)));
