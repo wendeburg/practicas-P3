@@ -12,6 +12,6 @@ public class FighterAlreadyInBoardException extends Exception {
 	}
 	
 	public String getMessage() {
-		return "FighterAlreadyInBoardException: el caza " + f.toString() + " ya tiene una posición asignada.";
+		return "ERROR: el caza " + f.toString() + " ya tiene una posición asignada.";
 	}
 }

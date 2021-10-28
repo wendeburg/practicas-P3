@@ -12,6 +12,6 @@ public class FighterIsDestroyedException extends Exception {
 	}
 	
 	public String getMessage() {
-		return "FighterIsDestroyedException: el caza " + f.toString() + " está destruido (antes de la lucha).";
+		return "ERROR: el caza " + f.toString() + " está destruido (antes de la lucha).";
 	}
 }

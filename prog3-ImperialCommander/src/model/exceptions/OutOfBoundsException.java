@@ -12,6 +12,6 @@ public class OutOfBoundsException extends Exception {
 	}
 	
 	public String getMessage() {
-		return "OutOfBoundsException: coordenada " + c.toString() + " fuera del tablero.";
+		return "ERROR: coordenada " + c.toString() + " fuera del tablero.";
 	}
 }

@@ -12,6 +12,6 @@ public class FighterNotInBoardException extends Exception {
 	}
 	
 	public String getMessage() {
-		return "FighterNotInBoardException: el caza " + f.toString() + " no tiene una posición asignada / no es correcta.";
+		return "ERROR: el caza " + f.toString() + " no tiene una posición asignada / no es correcta.";
 	}
 }

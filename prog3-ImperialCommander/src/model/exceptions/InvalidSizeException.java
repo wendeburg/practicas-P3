@@ -10,6 +10,6 @@ public class InvalidSizeException extends Exception {
 	}
 	
 	public String getMessage() {
-		return "InvalidSizeException: el tamaño de tablero " + size + " es inválido (debe ser >5).";
+		return "ERROR: el tamaño de tablero " + size + " es inválido.";
 	}
 }

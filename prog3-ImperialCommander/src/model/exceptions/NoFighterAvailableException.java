@@ -10,6 +10,6 @@ public class NoFighterAvailableException extends Exception {
 	}
 	
 	public String getMessage() {
-		return "NoFighterAvailableException: no ha sido posible encontrar un caza del tipo " + type + ".";
+		return "ERROR: no ha sido posible encontrar un caza del tipo " + type + ".";
 	}
 }
