@@ -102,7 +102,7 @@ public class Ship {
 			int numFighters = Integer.parseInt(stringParts[0]);
 			
 			for (int j = 0; j < numFighters; j++) {
-				fleet.add(new Fighter(stringParts[1], this));
+				fleet.add(FighterFactory.createFighter(stringParts[1], this));
 			}
 		}
 	}
@@ -135,7 +135,7 @@ public class Ship {
 				}
 			}
 		}
-
+		
 		return null;
 	}
 	
