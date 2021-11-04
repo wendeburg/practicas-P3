@@ -125,7 +125,7 @@ public class Ship {
 	 * @return un caza del tipo pedido si el parámetro type no está vacío,
 	 * un caza de cualquier tipo si lo está y en el caso de que no se encuentre
 	 * ningún caza se devuelve null.
-	 * @throws NoFighterAvailableException 
+	 * @throws NoFighterAvailableException cundo no hay ningún caza que devolver.
 	 */
 	public Fighter getFirstAvailableFighter(String type) throws NoFighterAvailableException {
 		boolean foundShip = false;

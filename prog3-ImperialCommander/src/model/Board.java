@@ -71,7 +71,7 @@ public class Board {
 	 * Remueve el caza del tablero si el caza situado en la posición del caza pasado como parámetro son iguales.
 	 * @param f caza que se quiere remover del tablero.
 	 * @return true si se remueve del tablero, false en cualquier otro caso.
-	 * @throws FighterNotInBoardException 
+	 * @throws FighterNotInBoardException si el caza que se quiere eliminar no está en el tablero.
 	 */
 	public boolean removeFighter(Fighter f) throws FighterNotInBoardException {
 		Objects.requireNonNull(f);
@@ -188,7 +188,7 @@ public class Board {
 	 * Devuelve las coordenadas vecinas de la que se pasa como argumento.
 	 * @param c coordenada de la que se queire las coordenadas vecinas.
 	 * @return TreeSet de las coordenadas vecinas.
-	 * @throws OutOfBoundsException 
+	 * @throws OutOfBoundsException si la coordenada de la que se quiere obtener la vecindad no está en el tablero.
 	 */
     public TreeSet<Coordinate> getNeighborhood(Coordinate c) throws OutOfBoundsException {
     	Objects.requireNonNull(c);
@@ -219,9 +219,8 @@ public class Board {
      * @param c posición en la que se queire colocar el caza indicado.
      * @param f caza que se quiere colocar en la posición indicada.
      * @return Devuelve 1 si se ha colocado, 0 en cualquier otro caso.
-     * @throws FighterAlreadyInBoardException 
-     * @throws OutOfBoundsException 
-     * @throws FighterNotInBoardException
+     * @throws FighterAlreadyInBoardException si el caza ya tiene una posición asignada. 
+     * @throws OutOfBoundsException si la coordenada no está dentro del tablero.
      */
     public int launch(Coordinate c, Fighter f) throws FighterAlreadyInBoardException, OutOfBoundsException {
     	Objects.requireNonNull(c);
@@ -292,7 +291,7 @@ public class Board {
     /**
      * Recorre la vecindad del caza luchando con los enemigos que se encuentre en el camino hasta ser destruído o terminar el recorrido.
      * @param f caza que recorre su vecindad.
-     * @throws FighterNotInBoardException 
+     * @throws FighterNotInBoardException cuando el caza no está en el tablero.
      */
     public void patrol(Fighter f) throws FighterNotInBoardException {
     	Objects.requireNonNull(f);

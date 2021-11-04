@@ -3,8 +3,16 @@ package model.fighters;
 import model.Fighter;
 import model.Ship;
 
+/**
+ * Clase YWing: La clase del los cazas de tipo YWing. 
+ * @author Francisco Wendeburg - Y8281851W.
+ */
 public class YWing extends Fighter {
 
+	/**
+	 * Constructor. Crea un nuevo caza con las carácterísticas del tipo.
+	 * @param mother nava madre del caza.
+	 */
 	public YWing(Ship mother) {
 		super(mother);
 		
@@ -13,6 +21,10 @@ public class YWing extends Fighter {
 		this.addShield(30);
 	}
 
+	/**
+	 * Constructor de copia.
+	 * @param f caza del que se quiere hacer la copia.
+	 */
 	private YWing(Fighter f) {
 		super(f);
 	}

@@ -3,8 +3,16 @@ package model.fighters;
 import model.Fighter;
 import model.Ship;
 
+/**
+ * Clase AWing: La clase del los cazas de tipo AWing. 
+ * @author Francisco Wendeburg - Y8281851W.
+ */
 public class AWing extends Fighter {
 
+	/**
+	 * Constructor. Crea un nuevo caza con las carácterísticas del tipo.
+	 * @param mother nava madre del caza.
+	 */
 	public AWing(Ship mother) {
 		super(mother);
 		
@@ -12,7 +20,11 @@ public class AWing extends Fighter {
 		this.addAttack(5);
 		this.addShield(-50);
 	}
-
+	
+	/**
+	 * Constructor de copia.
+	 * @param f caza del que se quiere hacer la copia.
+	 */
 	private AWing(Fighter f) {
 		super(f);
 	}

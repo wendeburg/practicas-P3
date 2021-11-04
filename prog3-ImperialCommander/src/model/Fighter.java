@@ -217,6 +217,7 @@ public abstract class Fighter {
 	 * Simula la pelea entre dos cazas. La pelea acaba una vez un caza es destruido.
 	 * @param enemy enemigo contra quien se pelea.
 	 * @return 1 si gana el caza que llama a la función, -1 si gana el enemigo.
+	 * @throws FighterIsDestroyedException si el caza estaba destruido antes de la pelea.
 	 */
 	public int fight(Fighter enemy) throws FighterIsDestroyedException {
 		int n, umbral;
@@ -299,8 +300,17 @@ public abstract class Fighter {
 		return true;
 	}
 	
+	
+	/**
+	 * Hace una copia defensiva del caza sobre el que se llama al método.
+	 * @return un nuevo caza del mismo tipo.
+	 */
     public abstract Fighter copy();
 
+    /**
+     * Getter.
+     * @return el símbolo del caza.
+     */
     public abstract char getSymbol();
 	
 }

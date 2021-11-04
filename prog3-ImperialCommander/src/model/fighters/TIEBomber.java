@@ -3,8 +3,16 @@ package model.fighters;
 import model.Fighter;
 import model.Ship;
 
+/**
+ * Clase TIEBomber: La clase del los cazas de tipo TIEBomber. 
+ * @author Francisco Wendeburg - Y8281851W.
+ */
 public class TIEBomber extends Fighter {
 
+	/**
+	 * Constructor. Crea un nuevo caza con las carácterísticas del tipo.
+	 * @param mother nava madre del caza.
+	 */
 	public TIEBomber(Ship mother) {
 		super(mother);
 		
@@ -13,6 +21,10 @@ public class TIEBomber extends Fighter {
 		this.addShield(35);
 	}
 
+	/**
+	 * Constructor de copia.
+	 * @param f caza del que se quiere hacer la copia.
+	 */
 	private TIEBomber(Fighter f) {
 		super(f);
 	}

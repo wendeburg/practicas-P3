@@ -7,7 +7,18 @@ import model.fighters.TIEInterceptor;
 import model.fighters.XWing;
 import model.fighters.YWing;
 
+/**
+ * Clase FighterFactory: Se encarga de fabricar cazas del tipo especificado. 
+ * @author Francisco Wendeburg - Y8281851W.
+ */
 public class FighterFactory {
+	
+	/**
+	 * Crea un nuevo caza.
+	 * @param type tipo del caza a crear.
+	 * @param mother nave madre del caza a crear.
+	 * @return un nuevo caza del tipo especificado.
+	 */
 	public static Fighter createFighter(String type, Ship mother) {
 		switch (type) {
 			case "AWing":
