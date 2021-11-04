@@ -5,6 +5,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.TreeSet;
 
+import model.exceptions.FighterAlreadyInBoardException;
+import model.exceptions.FighterIsDestroyedException;
+import model.exceptions.FighterNotInBoardException;
+import model.exceptions.InvalidSizeException;
+import model.exceptions.OutOfBoundsException;
+
 /**
  * Clase Board: Un tablero. Dedfinido por su tamaño.
  * @author Francisco Wendeburg - Y8281851W.
@@ -24,8 +30,13 @@ public class Board {
 	/**
 	 * Constructor: Crea un nuevo objeto Board del tamaño pasado como parámetro.
 	 * @param size int que es el tamaño del tablero.
+	 * @throws InvalidSizeException 
 	 */
-	public Board(int size) {
+	public Board(int size) throws InvalidSizeException {
+		if (size < 5) {
+			throw new InvalidSizeException(size);
+		}
+
 		this.size = size;
 		board = new HashMap<Coordinate,Fighter>();
 	}
@@ -50,7 +61,7 @@ public class Board {
 		Objects.requireNonNull(c);
 		
 		if (board.get(c) != null) {
-			return new Fighter(board.get(c));
+			return board.get(c).copy();
 		}
 		
 		return null;
@@ -60,9 +71,14 @@ public class Board {
 	 * Remueve el caza del tablero si el caza situado en la posición del caza pasado como parámetro son iguales.
 	 * @param f caza que se quiere remover del tablero.
 	 * @return true si se remueve del tablero, false en cualquier otro caso.
+	 * @throws FighterNotInBoardException 
 	 */
-	public boolean removeFighter(Fighter f) {
+	public boolean removeFighter(Fighter f) throws FighterNotInBoardException {
 		Objects.requireNonNull(f);
+		
+		if (!isFighterInBoard(f)) {
+			throw new FighterNotInBoardException(f);
+		}
 		
 		if (board.get(f.getPosition()) != null) {
 			if (board.get(f.getPosition()).equals(f)) {
@@ -70,9 +86,13 @@ public class Board {
 				f.setPosition(null);
 				return true;
 			}
+			else {
+				throw new FighterNotInBoardException(f);
+			}
 		}
-		
-		return false;
+		else {
+			throw new FighterNotInBoardException(f);
+		}
 	}
 	
 	/**
@@ -168,9 +188,14 @@ public class Board {
 	 * Devuelve las coordenadas vecinas de la que se pasa como argumento.
 	 * @param c coordenada de la que se queire las coordenadas vecinas.
 	 * @return TreeSet de las coordenadas vecinas.
+	 * @throws OutOfBoundsException 
 	 */
-    public TreeSet<Coordinate> getNeighborhood(Coordinate c) {
+    public TreeSet<Coordinate> getNeighborhood(Coordinate c) throws OutOfBoundsException {
     	Objects.requireNonNull(c);
+    	
+    	if (!inside(c)) {
+    		throw new OutOfBoundsException(c);
+    	}
 
     	if (isCoordACorner(c)) {
     		return getCornerNeighborhood(c);
@@ -194,29 +219,42 @@ public class Board {
      * @param c posición en la que se queire colocar el caza indicado.
      * @param f caza que se quiere colocar en la posición indicada.
      * @return Devuelve 1 si se ha colocado, 0 en cualquier otro caso.
+     * @throws FighterAlreadyInBoardException 
+     * @throws OutOfBoundsException 
+     * @throws FighterNotInBoardException
      */
-    public int launch(Coordinate c, Fighter f) {
+    public int launch(Coordinate c, Fighter f) throws FighterAlreadyInBoardException, OutOfBoundsException {
     	Objects.requireNonNull(c);
     	Objects.requireNonNull(f);
+    	
+    	if (f.getPosition() != null) {
+    		throw new FighterAlreadyInBoardException(f);
+    	}
     	
     	if (inside(c)) {
     		if (!(board.get(c) == null)) {
     			if (!(board.get(c).getSide() == f.getSide())) {
-    				if (f.fight(board.get(c)) == 1) {
-    					f.getMotherShip().updateResults(1);
-    					board.get(c).getMotherShip().updateResults(-1);
-    					removeFighter(board.get(c));
-    	    			board.put(c, f);
-    	    			f.setPosition(c);
-    	    			
-    	    			return 1;
-    				}
-    				else {
-    					f.getMotherShip().updateResults(-1);
-    					board.get(c).getMotherShip().updateResults(1);
-    	    			
-    	    			return -1;
-    				}
+    				try {
+						if (f.fight(board.get(c)) == 1) {
+							f.getMotherShip().updateResults(1);
+							board.get(c).getMotherShip().updateResults(-1);
+							removeFighter(board.get(c));
+							board.put(c, f);
+							f.setPosition(c);
+							
+							return 1;
+						}
+						else {
+							f.getMotherShip().updateResults(-1);
+							board.get(c).getMotherShip().updateResults(1);
+							
+							return -1;
+						}
+					} catch (FighterIsDestroyedException e) {
+						throw new RuntimeException();
+					} catch (FighterNotInBoardException e) {
+						throw new RuntimeException();
+					}
     			}
     			else {
     				return 0;
@@ -229,7 +267,7 @@ public class Board {
     		}
     	}
     	else {
-    		return 0;
+    		throw new OutOfBoundsException(c);
     	}
     }
     
@@ -254,12 +292,22 @@ public class Board {
     /**
      * Recorre la vecindad del caza luchando con los enemigos que se encuentre en el camino hasta ser destruído o terminar el recorrido.
      * @param f caza que recorre su vecindad.
+     * @throws FighterNotInBoardException 
      */
-    public void patrol(Fighter f) {
+    public void patrol(Fighter f) throws FighterNotInBoardException {
     	Objects.requireNonNull(f);
     	
+    	if (f.getPosition() == null) {
+    		throw new FighterNotInBoardException(f);
+    	}
+    	
     	if (isFighterInBoard(f)) {
-    		TreeSet<Coordinate> n = getNeighborhood(f.getPosition());
+    		TreeSet<Coordinate> n;
+			try {
+				n = getNeighborhood(f.getPosition());
+			} catch (OutOfBoundsException e) {
+				throw new RuntimeException();
+			}
     		
     		for (Coordinate c : n) {
     			if (f.isDestroyed() == true) {
@@ -268,7 +316,12 @@ public class Board {
     			
     			if (!(board.get(c) == null)) {
     				if (board.get(c).getSide() != f.getSide()) {
-    					int fightResult = f.fight(board.get(c));
+    					int fightResult;
+						try {
+							fightResult = f.fight(board.get(c));
+						} catch (FighterIsDestroyedException e) {
+							throw new RuntimeException();
+						}
     	   				if (fightResult == 1) {
         					f.getMotherShip().updateResults(1);
         					board.get(c).getMotherShip().updateResults(-1);

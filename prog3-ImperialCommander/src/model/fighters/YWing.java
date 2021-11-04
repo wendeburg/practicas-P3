@@ -9,7 +9,7 @@ public class YWing extends Fighter {
 		super(mother);
 		
 		this.addVelocity(-20);
-		this.addAttack(10);
+		this.addAttack(-10);
 		this.addShield(30);
 	}
 

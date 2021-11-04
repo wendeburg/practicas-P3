@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import model.exceptions.NoFighterAvailableException;
+
 /**
  * Clase Ship: una nave que contiene una flota de cazas.
  * @author @author Francisco Wendeburg - Y8281851W.
@@ -123,17 +125,26 @@ public class Ship {
 	 * @return un caza del tipo pedido si el parámetro type no está vacío,
 	 * un caza de cualquier tipo si lo está y en el caso de que no se encuentre
 	 * ningún caza se devuelve null.
+	 * @throws NoFighterAvailableException 
 	 */
-	public Fighter getFirstAvailableFighter(String type) {
+	public Fighter getFirstAvailableFighter(String type) throws NoFighterAvailableException {
+		boolean foundShip = false;
+		
 		for (int i = 0; i < fleet.size(); i++) {
 			if (!(fleet.get(i).isDestroyed())) {
 				if (type.length() == 0) {
+					foundShip = true;
 					return fleet.get(i);	
 				}
 				else if (fleet.get(i).getType().contentEquals(type)) {
+					foundShip = true;
 					return fleet.get(i);
 				}
 			}
+		}
+		
+		if (!foundShip) {
+			throw new NoFighterAvailableException(type);
 		}
 		
 		return null;
