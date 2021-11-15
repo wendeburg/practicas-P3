@@ -300,6 +300,11 @@ public class Board {
     		throw new FighterNotInBoardException(f);
     	}
     	
+    	if (f.isDestroyed()) {
+    		throw new RuntimeException();
+    	}
+    	
+    	
     	if (isFighterInBoard(f)) {
     		TreeSet<Coordinate> n;
 			try {
@@ -334,6 +339,9 @@ public class Board {
     				}
     			}
     		}
+    	}
+    	else {
+    		throw new RuntimeException();
     	}
     }
 }

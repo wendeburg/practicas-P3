@@ -1,20 +1,20 @@
 package model;
 
+/*
+ * esta clase tiene los mismos tests que FightersPreTest.java 
+ */
+
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import model.fighters.AWing;
 import model.fighters.TIEBomber;
-import model.fighters.TIEFighter;
-import model.fighters.TIEInterceptor;
 import model.fighters.XWing;
-import model.fighters.YWing;
 
-public class FightersPreTest {
+public class FightersTestP3 {
 
 	Ship rebelShip, imperialShip;
 	Board board;
@@ -41,40 +41,10 @@ public class FightersPreTest {
 	public void testCopy() {
 		Fighter fx = FighterFactory.createFighter("XWing", rebelShip);
 		Fighter fy = FighterFactory.createFighter("YWing", rebelShip);
-		Fighter fa = FighterFactory.createFighter("AWing", rebelShip);
-		Fighter fTIEB = FighterFactory.createFighter("TIEBomber", imperialShip);
-		Fighter fTIEF = FighterFactory.createFighter("TIEFighter", imperialShip);
-		Fighter fTIEI = FighterFactory.createFighter("TIEInterceptor", imperialShip);
-		
-		YWing fyy = (YWing)fy;
-		YWing fycopy = (YWing) fy.copy();
 		assertEquals("copy YWing",fy,fy.copy());
-		assertEquals("copy YWing as YWing", fyy, fycopy);
-		
 		XWing fxx = (XWing)fx;
 		XWing fxcopy = (XWing) fx.copy();
-		assertEquals("copy XWing",fx,fx.copy());
 		assertEquals("copy XWing as XWing",fxx,fxcopy);
-		
-		AWing faa = (AWing)fa;
-		AWing facopy = (AWing) fa.copy();
-		assertEquals("copy AWing",fa,fa.copy());
-		assertEquals("copy AWing as AWing", faa, facopy);
-		
-		TIEBomber fB = (TIEBomber)fTIEB;
-		TIEBomber fBcopy = (TIEBomber) fB.copy();
-		assertEquals("copy TIEBomber",fB,fB.copy());
-		assertEquals("copy TIEBomber as TIEBomber",fB,fBcopy);
-		
-		TIEFighter fF = (TIEFighter)fTIEF;
-		TIEFighter fFcopy = (TIEFighter) fF.copy();
-		assertEquals("copy TIEBomber",fF,fF.copy());
-		assertEquals("copy TIEFighter as TIEFighter",fF,fFcopy);
-		
-		TIEInterceptor fI = (TIEInterceptor)fTIEI;
-		TIEInterceptor fIcopy = (TIEInterceptor) fI.copy();
-		assertEquals("copy TIEBomber",fI,fI.copy());
-		assertEquals("copy TIEBomber as TIEBomber",fI,fIcopy);
 	}
 	
 	@Test

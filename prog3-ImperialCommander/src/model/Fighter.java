@@ -49,7 +49,6 @@ public abstract class Fighter {
 	
 	/**
 	 * Crea un nuevo Fighter con una velocity=100, attack=80, shield=80 y sin posición en el tablero.
-	 * @param type tipo de caza.
 	 * @param mother nave de la que sale el caza.
 	 */
 	protected Fighter(Ship mother) {
