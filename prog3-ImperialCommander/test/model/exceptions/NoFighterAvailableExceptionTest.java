@@ -58,7 +58,6 @@ public class NoFighterAvailableExceptionTest {
 	@Test
 	public void getFirstAvailableFighterUnknownFighterTest() {
 		rebelShip.addFighters("1/XWing:3/AWing:3/YWing:1/TIEBomber:45/TIEInterceptor:3/UWing");
-		System.out.println(rebelShip.toString());
 		try {
 			rebelShip.getFirstAvailableFighter("UWing");
 			fail("ERROR: Debió lanzar la excepción NoFighterAvailableException");
