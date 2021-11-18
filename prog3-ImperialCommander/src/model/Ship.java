@@ -35,7 +35,7 @@ public class Ship {
 	/**
 	 * Flota (conjunto de cazas) de la nave.
 	 */
-	private ArrayList<Fighter> fleet;
+	protected ArrayList<Fighter> fleet;
 	
 	/**
 	 * Constructor de la clase Ship. Establece wins y losses a 0, side y
@@ -131,15 +131,20 @@ public class Ship {
 		boolean foundShip = false;
 		
 		for (int i = 0; i < fleet.size(); i++) {
-			if (!(fleet.get(i).isDestroyed())) {
-				if (type.length() == 0) {
-					foundShip = true;
-					return fleet.get(i);	
-				}
-				else if (fleet.get(i).getType().contentEquals(type)) {
-					foundShip = true;
-					return fleet.get(i);
-				}
+			Fighter f = fleet.get(i);
+			if (f != null) {
+				if (f.getPosition() == null) {
+					if (!(f.isDestroyed())) {
+						if (type.length() == 0) {
+							foundShip = true;
+							return f;	
+						}
+						else if (fleet.get(i).getType().contentEquals(type)) {
+							foundShip = true;
+							return f;
+						}
+					}	
+				}	
 			}
 		}
 		

@@ -25,7 +25,7 @@ public class Board {
 	/**
 	 * Mapa para almacenar los cazas en el tablero.
 	 */
-	private Map<Coordinate,Fighter> board;
+	protected Map<Coordinate,Fighter> board;
 	
 	/**
 	 * Constructor: Crea un nuevo objeto Board del tamaño pasado como parámetro.
