@@ -490,7 +490,23 @@ public class ShipPreTestP2 {
 	@Test
 	public void testRequireNonNull() throws NoFighterAvailableException {
 		
-		fail("Realiza las comprobaciones de los métodos");
+		try {
+			Ship s = new Ship(null, Side.IMPERIAL);
+			fail("ERROR: Debió lanzar NullPointerException");
+		}catch (NullPointerException e) {}
+		try {
+			Ship s2 = new Ship("test", null);
+			fail("ERROR: Debió lanzar NullPointerException");
+		}catch (NullPointerException e) {}
+		
+		try {
+			ship.addFighters(null);
+			fail("ERROR: Debió lanzar NullPointerException");
+		}catch (NullPointerException e) {}
+		try {
+			ship.getFirstAvailableFighter(null);
+			fail("ERROR: Debió lanzar NullPointerException");
+		}catch (NullPointerException e) {}
 	}
 
 	/*************************************/
