@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 import model.exceptions.FighterIsDestroyedException;
 
 /**
@@ -52,6 +54,8 @@ public abstract class Fighter {
 	 * @param mother nave de la que sale el caza.
 	 */
 	protected Fighter(Ship mother) {
+		Objects.requireNonNull(mother);
+		
 		id = nextId;
 		nextId++;
 		
@@ -68,6 +72,8 @@ public abstract class Fighter {
 	 * @param f Fighter cuyos atributos se van a copiar.
 	 */
 	protected Fighter(Fighter f) {
+		Objects.requireNonNull(f);
+		
 		id = f.id;
 		velocity = f.velocity;
 		attack = f.attack;
@@ -209,6 +215,8 @@ public abstract class Fighter {
 	 * @return un entero con el daño a realizar al enemigo pasado como parámetro.
 	 */
 	public int getDamage(int n, Fighter enemy) {
+		Objects.requireNonNull(enemy);
+		
 		return (n*attack)/KDIVDANYO;
 	}
 	
@@ -219,6 +227,7 @@ public abstract class Fighter {
 	 * @throws FighterIsDestroyedException si el caza estaba destruido antes de la pelea.
 	 */
 	public int fight(Fighter enemy) throws FighterIsDestroyedException {
+		Objects.requireNonNull(enemy);
 		int n, umbral;
 		
 		if (this.isDestroyed()) {

@@ -2,6 +2,7 @@ package model.game;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Objects;
 
 import model.Coordinate;
 import model.Side;
@@ -18,6 +19,9 @@ public class PlayerFile implements IPlayer {
 	private GameBoard board;
 	
 	public PlayerFile(Side side, BufferedReader br) {
+		Objects.requireNonNull(side);
+		Objects.requireNonNull(br);
+		
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("PlayerFile ");
@@ -38,6 +42,8 @@ public class PlayerFile implements IPlayer {
 	
 	@Override
 	public void setBoard(GameBoard gb) {
+		Objects.requireNonNull(gb);
+		
 		board = gb;
 	}
 

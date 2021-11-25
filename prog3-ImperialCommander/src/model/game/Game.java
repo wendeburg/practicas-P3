@@ -1,6 +1,7 @@
 package model.game;
 
 import java.util.List;
+import java.util.Objects;
 
 import model.Side;
 import model.exceptions.InvalidSizeException;
@@ -13,6 +14,9 @@ public class Game {
 	
 	
 	public Game(IPlayer imperial, IPlayer rebel) {
+		Objects.requireNonNull(imperial);
+		Objects.requireNonNull(rebel);
+		
 		this.rebel = rebel;
 		this.imperial = imperial;
 		
@@ -49,8 +53,8 @@ public class Game {
 				System.out.println("BEFORE IMPERIAL");
 				
 				System.out.println(board.toString());
-				System.out.println(imperial.toString());
-				System.out.println(rebel.toString());
+				System.out.println(imperial.getGameShip().toString());
+				System.out.println(rebel.getGameShip().toString());
 				
 				playResult = imperial.nextPlay();
 				
@@ -62,8 +66,8 @@ public class Game {
 					System.out.print("IMPERIAL(" + getNumFighters(imperial.getGameShip()) + "): ");
 					System.out.println("AFTER IMPERIAL, BEFORE REBEL");
 					System.out.println(board.toString());
-					System.out.println(imperial.toString());
-					System.out.println(rebel.toString());
+					System.out.println(imperial.getGameShip().toString());
+					System.out.println(rebel.getGameShip().toString());
 					isImperialTurn = false;
 				}
 			}
@@ -78,8 +82,8 @@ public class Game {
 					System.out.print("REBEL(" + getNumFighters(rebel.getGameShip()) + "): ");
 					System.out.println("AFTER REBEL");
 					System.out.println(board.toString());
-					System.out.println(imperial.toString());
-					System.out.println(rebel.toString());
+					System.out.println(imperial.getGameShip().toString());
+					System.out.println(rebel.getGameShip().toString());
 					isImperialTurn = true;	
 				}
 			}

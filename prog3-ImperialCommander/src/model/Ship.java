@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 
 import model.exceptions.NoFighterAvailableException;
 
@@ -44,6 +45,9 @@ public class Ship {
 	 * @param side Side de la nave /(REBEL/IMPERIAL).
 	 */
 	public Ship(String name, Side side) {
+		Objects.requireNonNull(name);
+		Objects.requireNonNull(side);
+		
 		this.name = name;
 		this.side = side;
 		wins = 0;
@@ -96,6 +100,8 @@ public class Ship {
 	 * @param fd String con un formato establecido.
 	 */
 	public void addFighters(String fd) {
+		Objects.requireNonNull(fd);
+		
 		String strings[] = fd.split(":");
 		
 		for (int i = 0; i < strings.length; i++) {
@@ -128,6 +134,8 @@ public class Ship {
 	 * @throws NoFighterAvailableException cundo no hay ningún caza que devolver.
 	 */
 	public Fighter getFirstAvailableFighter(String type) throws NoFighterAvailableException {
+		Objects.requireNonNull(type);
+		
 		boolean foundShip = false;
 		
 		for (int i = 0; i < fleet.size(); i++) {

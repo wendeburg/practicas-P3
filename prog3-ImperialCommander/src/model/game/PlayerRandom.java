@@ -1,6 +1,7 @@
 package model.game;
 
 import java.util.List;
+import java.util.Objects;
 
 import model.Coordinate;
 import model.RandomNumber;
@@ -18,6 +19,8 @@ public class PlayerRandom implements IPlayer {
 	private GameBoard board;
 	
 	public PlayerRandom(Side side, int numFighters) {
+		Objects.requireNonNull(side);
+		
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("PlayerRandom ");
@@ -37,6 +40,8 @@ public class PlayerRandom implements IPlayer {
 	
 	@Override
 	public void setBoard(GameBoard gb) {
+		Objects.requireNonNull(gb);
+		
 		board = gb;
 	}
 
