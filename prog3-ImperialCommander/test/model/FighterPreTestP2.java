@@ -5,9 +5,12 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import model.exceptions.FighterAlreadyInBoardException;
 import model.exceptions.FighterIsDestroyedException;
+import model.exceptions.FighterNotInBoardException;
+import model.exceptions.OutOfBoundsException;
 
-public class FighterTestP2 {
+public class FighterPreTestP2 {
 
 	private final int kInitVelocity = 100;
 	private final int kInitAttack = 80;
@@ -337,6 +340,28 @@ public class FighterTestP2 {
 	public final void testHashCode() {
 		Fighter enemy = FighterFactory.createFighter("XWing", imperialShip);
 		assertNotEquals(enemy.hashCode(),fighter.hashCode());
+	}
+	
+	/* Test de comprobación de los parámetros null en Fighter */
+	@Test
+	public void testRequireNonNull() throws FighterIsDestroyedException  {
+		
+		try {
+			FighterFactory.createFighter(null, rebelShip);
+			fail("ERROR: Debió lanzar NullPointerException");
+		}catch (NullPointerException e) {}
+		try {
+			FighterFactory.createFighter("XWing", null);;
+			fail("ERROR: Debió lanzar NullPointerException");
+		}catch (NullPointerException e) {}
+		try {
+			fighter.getDamage(2, null);
+			fail("ERROR: Debió lanzar NullPointerException");
+		}catch (NullPointerException e) {}
+		try {
+			fighter.fight(null);
+			fail("ERROR: Debió lanzar NullPointerException");
+		}catch (NullPointerException e) {}
 	}
 
 }

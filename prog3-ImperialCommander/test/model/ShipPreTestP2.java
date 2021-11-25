@@ -7,9 +7,15 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import model.exceptions.FighterAlreadyInBoardException;
+import model.exceptions.FighterNotInBoardException;
+import model.exceptions.InvalidSizeException;
 import model.exceptions.NoFighterAvailableException;
+import model.exceptions.OutOfBoundsException;
+import model.game.GameBoard;
+import model.game.exceptions.WrongFighterIdException;
 
-public class ShipTestP2 {
+public class ShipPreTestP2 {
 
 	Ship ship;
 	final String kFleet1 = "5/XWing:12/AWing:3/YWing:2/XWing";
@@ -91,7 +97,6 @@ public class ShipTestP2 {
 	@Test
 	public void testAddFighters1() {
 		ship.addFighters("1/XWing");
-		 
 		List<Fighter> lfleet = (List<Fighter>)ship.getFleetTest();
 		assertNotNull(lfleet);
 		assertEquals(1,lfleet.size());
@@ -195,12 +200,6 @@ public class ShipTestP2 {
 		ship.addFighters(kFleet1);
 		destroy("YWing",3);
 		assertNull(ship.getFirstAvailableFighter("YWing"));
-	}
-	
-	/* Comprueba que getFirstAvailableFighter devuelve null en una nave que no tiene cazas.*/
-	@Test(expected=NoFighterAvailableException.class)
-	public void testGetFirstAvailableFighterbis() throws NoFighterAvailableException {
-		assertNull(ship.getFirstAvailableFighter(""));
 	}
 	
 	
@@ -484,6 +483,15 @@ public class ShipTestP2 {
 		ship.addFighters(kFleet3);
 		compareLines (kToString3, ship.toString());
 	}
+	
+	/* Realiza los test de comprobación de los parámetros null en Ship para los métodos
+	 * constructor, addFighters y getFirstAvailableFighter
+	 */
+	@Test
+	public void testRequireNonNull() throws NoFighterAvailableException {
+		
+		fail("Realiza las comprobaciones de los métodos");
+	}
 
 	/*************************************/
 	//METODOS AUXILIARES PARA LOS TESTS
@@ -506,6 +514,7 @@ public class ShipTestP2 {
 			return null;
 		}	
 	}*/
+	
 	/*Destruye 'max' número de cazas del tipo 'type'. Si type="" destruye
 	 * los 'max' primeros de cualquier tipo.
 	 */

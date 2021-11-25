@@ -42,7 +42,7 @@ public class PlayerRandom implements IPlayer {
 
 	@Override
 	public GameShip getGameShip() {
-		return ship;
+		return ship; // Es copia defensiva??
 	}
 
 	@Override

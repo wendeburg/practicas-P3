@@ -1,7 +1,6 @@
 package model;
 
 import static org.junit.Assert.assertEquals;
-import model.fighters.*;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
@@ -18,14 +17,17 @@ import model.exceptions.FighterAlreadyInBoardException;
 import model.exceptions.FighterNotInBoardException;
 import model.exceptions.InvalidSizeException;
 import model.exceptions.OutOfBoundsException;
+import model.game.GameBoard;
+import model.game.exceptions.WrongFighterIdException;
 
-public class BoardTestP2 {
+public class BoardPreTestP2 {
 
 	Board board;
 	Ship rebelShip, imperialShip;
 	
 	@Before
 	public void setUp() throws Exception {
+		
 		board = new Board(10);
 		rebelShip = new Ship("Alderaan",Side.REBEL);
 		imperialShip = new Ship("Lanzadera T-4a", Side.IMPERIAL);
@@ -35,19 +37,8 @@ public class BoardTestP2 {
 	@Test
 	public void testBoard() {
 		assertEquals(10, board.getSize());
-		//assertNotNull (board.get)
 	}
 
-	@Test(expected=InvalidSizeException.class)
-	public void testBoard2() throws InvalidSizeException {
-		Board b53243 = new Board(4);
-	}
-	
-	public void testBoard3() throws InvalidSizeException {
-		Board b53243 = new Board(5);
-		assertEquals(5, b53243.getSize());
-	}
-	
 	/* Test que comprueba getFighter en un Board vacío */
 	@Test
 	public void testGetFighterEmpty() {
@@ -276,15 +267,6 @@ public class BoardTestP2 {
 		Fighter fighter = rebelShip.getFleetTest().get(0);
 		assertEquals(0,board.launch(new Coordinate(-1,0), fighter));
 	}
-	
-	/* Test launch para un caza que ya se encuentra en el tablero */
-	@Test(expected=FighterAlreadyInBoardException.class)
-	public void testLaunch6() throws FighterAlreadyInBoardException, OutOfBoundsException {
-		rebelShip.addFighters("1/XWing");
-		Fighter fighter = rebelShip.getFleetTest().get(0);
-		assertEquals(0,board.launch(new Coordinate(5,5), fighter));
-		assertEquals(0,board.launch(new Coordinate(6,5), fighter));
-	}
 
 	/* Test launch para una coordenada dentro del tablero. Comprobamos que se ha puesto
 	 * y que se ha actualizado la posición del caza */
@@ -408,8 +390,6 @@ public class BoardTestP2 {
 		}
 	}
 	
-	
-	
 	/* El caza que patrulla encuentra fighters en todas las casillas a su alrededor, son
 	 * del bando contrario. Los vence a todos. Comprueba los valores wins, y losses de
 	 * los ships y el shield del fighter vencedor y de los derrotados.
@@ -493,13 +473,15 @@ public class BoardTestP2 {
 		}	
 	}
 	
-	/* El caza que patrulla no está en ninguna posición*/
-	@Test(expected=FighterNotInBoardException.class)
-	public void testPatrol7() throws FighterAlreadyInBoardException, OutOfBoundsException, FighterNotInBoardException {
-		rebelShip.addFighters("1/XWing");
-		Fighter rebel = rebelShip.getFleetTest().get(0);
-		board.patrol(rebel);
+	/* Realiza los test de comprobación de los parámetros null en Board para launch,
+	 * patrol, removeFighter, getFighter y getNeigborhood 
+	 */
+	@Test
+	public void testRequireNonNull() throws FighterAlreadyInBoardException, OutOfBoundsException, FighterNotInBoardException  {
+		
+		fail("Realiza las comprobaciones de los métodos");
 	}
+	
 	
 	//METODOS DE APOYO
 	void addFightersOnBoard()  {
