@@ -106,7 +106,24 @@ public class GameBoardPreTest {
 		gameShip.addFighters("7/AWing:6/XWing:2/YWing");
 		GameShip gameImperialShip = new GameShip("Lanzadera T-4a", Side.IMPERIAL);
 		gameImperialShip.addFighters("3/TIEBomber:9/TIEInterceptor:2/TIEFighter");
-		fail("Termina el test");
+		
+		gameBoard.launch(new Coordinate(0, 0), gameShip.getFleetTest().get(0));
+		gameBoard.launch(new Coordinate(1, 0), gameShip.getFleetTest().get(1));
+		gameBoard.launch(new Coordinate(2, 0), gameShip.getFleetTest().get(2));
+		gameBoard.launch(new Coordinate(3, 0), gameShip.getFleetTest().get(3));
+		gameBoard.launch(new Coordinate(4, 0), gameShip.getFleetTest().get(4));
+		
+		gameBoard.launch(new Coordinate(5, 0), gameImperialShip.getFleetTest().get(0));
+		gameBoard.launch(new Coordinate(6, 0), gameImperialShip.getFleetTest().get(1));
+		gameBoard.launch(new Coordinate(7, 0), gameImperialShip.getFleetTest().get(2));
+		gameBoard.launch(new Coordinate(8, 0), gameImperialShip.getFleetTest().get(3));
+		gameBoard.launch(new Coordinate(9, 0), gameImperialShip.getFleetTest().get(4));
+		gameBoard.launch(new Coordinate(0, 1), gameImperialShip.getFleetTest().get(5));
+		gameBoard.launch(new Coordinate(1, 1), gameImperialShip.getFleetTest().get(6));
+		gameBoard.launch(new Coordinate(2, 1), gameImperialShip.getFleetTest().get(7));
+		
+		assertEquals(5,gameBoard.numFighters(Side.REBEL));
+		assertEquals(8,gameBoard.numFighters(Side.IMPERIAL));
 	}
 	
 	/* Se prueba toString para un tablero de 15x15 vacío
@@ -128,8 +145,34 @@ public class GameBoardPreTest {
 	//TODO
 	@Test
 	public void testToStringExample() throws FighterAlreadyInBoardException, OutOfBoundsException, InvalidSizeException {
+		GameShip rebelShip = new GameShip("REBEL", Side.REBEL);
+		GameShip imperialShip = new GameShip("IMPERIAL", Side.IMPERIAL);
 		
-		fail("Termina de realizar el test");
+		rebelShip.addFighters("4/AWing:3/XWing:2/YWing");
+		imperialShip.addFighters("1/TIEInterceptor:1/TIEBomber");
+		
+		// AWing.
+		gameBoard.launch(new Coordinate(3, 0), rebelShip.getFleetTest().get(0));
+		gameBoard.launch(new Coordinate(8, 0), rebelShip.getFleetTest().get(1));
+		gameBoard.launch(new Coordinate(7, 3), rebelShip.getFleetTest().get(2));
+		gameBoard.launch(new Coordinate(3, 5), rebelShip.getFleetTest().get(3));
+		
+		// XWing.
+		gameBoard.launch(new Coordinate(9, 0), rebelShip.getFleetTest().get(4));
+		gameBoard.launch(new Coordinate(4, 2), rebelShip.getFleetTest().get(5));
+		gameBoard.launch(new Coordinate(8, 7), rebelShip.getFleetTest().get(6));
+	
+		// YWing.
+		gameBoard.launch(new Coordinate(3, 6), rebelShip.getFleetTest().get(7));
+		gameBoard.launch(new Coordinate(4, 7), rebelShip.getFleetTest().get(8));
+	
+		// TIEInterceptor.
+		gameBoard.launch(new Coordinate(1, 6), imperialShip.getFleetTest().get(0));
+		
+		// TIEBomber.
+		gameBoard.launch(new Coordinate(6, 7), imperialShip.getFleetTest().get(1));
+	
+		compareLines(kEXAMPLEBOARD, gameBoard.toString());
 	}
 
 	/*************************

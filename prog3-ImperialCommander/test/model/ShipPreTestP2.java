@@ -489,7 +489,6 @@ public class ShipPreTestP2 {
 	 */
 	@Test
 	public void testRequireNonNull() throws NoFighterAvailableException {
-		
 		try {
 			Ship s = new Ship(null, Side.IMPERIAL);
 			fail("ERROR: Debió lanzar NullPointerException");

@@ -92,7 +92,7 @@ public class PlayerRandomPreTest {
 	}
 	
 	/* Crea un PlayerRandom Imperial, con numSize de 500. Invoca a initFighters() y
-	 * comprueba que el fleet del GameShip asociado tiene 960 cazas y
+	 * comprueba que el fleet del GameShip asociado tiene 920 cazas y
 	 * que el ship es correcto (coincide con kIMPERIALGAMESHIP)
 	 */
 	//TODO

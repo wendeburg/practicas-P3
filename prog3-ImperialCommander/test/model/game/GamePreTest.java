@@ -75,7 +75,7 @@ public class GamePreTest {
 
 	/* Game con ships de los Players vacíos.
 	 * Se crean players con naves sin cazas, para ello se crea un string con tipos de cazas erróneos. 
-	 * Se comprueba que el que gana es el player IMPERIAL y que la salida de play() coincide con el resultado
+	 * Se comprueba que el que gana es el player REBEL y que la salida de play() coincide con el resultado
 	 * solución que está en el fichero "files/testPlayEmptyShips.out"
 	 */
 	@Test
@@ -101,7 +101,7 @@ public class GamePreTest {
 	
 	/* Game con la nave REBEL inicialmente vacía.
 	 * Crea el player REBEL con su nave vacía y la IMPERIAL con cazas. Comprueba que 
-	 * el que gana es REBEL y que la salida de play coincide con el resultado solución que
+	 * el que gana es IMPERIAL y que la salida de play coincide con el resultado solución que
 	 * está en el fichero "files/testPlayEmptyRebelShip.out"
 	 */
 	//TODO
