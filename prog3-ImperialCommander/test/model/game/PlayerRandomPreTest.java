@@ -70,13 +70,15 @@ public class PlayerRandomPreTest {
 	 * es del bando REBEL y que el nombre es correcto. 
 	 * Comprueba que el objeto playerRandom es una instancia de IPlayer.
 	 */
-	//TODO
 	@Test
 	public void testPlayerRandom() {
 		gs = playerRandom.getGameShip();
 		assertEquals(Side.REBEL,gs.getSide());
 		assertEquals("PlayerRandom REBEL Ship", gs.getName());
-		fail("Comprueba que el objeto playerRandom es una instancia de IPlayer");
+
+		if (!(playerRandom instanceof IPlayer)) {
+			fail("PlayerRandom debe ser una instancia de IPlayer.");
+		}
 	}
 
 
@@ -98,6 +100,11 @@ public class PlayerRandomPreTest {
 	//TODO
 	@Test
 	public void testInitFightersImperial() {
+		playerRandomImperial = new PlayerRandom(Side.IMPERIAL,500);
+		playerRandomImperial.initFighters();
+
+		assertEquals(920, playerRandomImperial.getGameShip().getFleetTest().size());
+		assertEquals(kIMPERIALGAMESHIP, playerRandomImperial.showShip()); // Es así?
 		fail("Realiza el test");
 	}
 
