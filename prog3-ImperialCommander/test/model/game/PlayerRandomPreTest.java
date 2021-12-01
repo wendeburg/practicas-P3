@@ -97,7 +97,6 @@ public class PlayerRandomPreTest {
 	 * comprueba que el fleet del GameShip asociado tiene 920 cazas y
 	 * que el ship es correcto (coincide con kIMPERIALGAMESHIP)
 	 */
-	//TODO
 	@Test
 	public void testInitFightersImperial() {
 		playerRandomImperial = new PlayerRandom(Side.IMPERIAL,500);
@@ -105,7 +104,6 @@ public class PlayerRandomPreTest {
 
 		assertEquals(920, playerRandomImperial.getGameShip().getFleetTest().size());
 		assertEquals(kIMPERIALGAMESHIP, playerRandomImperial.showShip()); // Es así?
-		fail("Realiza el test");
 	}
 
 	/* Para un PlayerRandom sin iniciar (sin cazas en la nave) se comprueba que isFleetDestroyed es true
@@ -185,11 +183,18 @@ public class PlayerRandomPreTest {
 	}
 	
 	/* Realiza el test de comprobación de los parámetros null en PlayerRandom del constructor y de setBoard */
-	//TODO
 	@Test
 	public void testRequireNonNull()  {
-		
-		fail("Realiza el test");
+		PlayerRandom p = new PlayerRandom(Side.REBEL, 1);
+
+		try {
+			PlayerRandom p2 = new PlayerRandom(null, 1);
+			fail("ERROR: Debió lanzar NullPointerException");
+		}catch (NullPointerException e) {}
+		try {
+			p.setBoard(null);
+			fail("ERROR: Debió lanzar NullPointerException");
+		}catch (NullPointerException e) {}
 	}
 
 	/***************************
