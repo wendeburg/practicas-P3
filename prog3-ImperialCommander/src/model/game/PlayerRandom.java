@@ -71,7 +71,7 @@ public class PlayerRandom implements IPlayer {
 					sb.append(":");
 				}
 				
-				sb.append(RandomNumber.newRandomNumber(numFighters) + "/" + rebelTypes[i]);
+				sb.append(RandomNumber.newRandomNumber(numFighters) + "/" + imperialTypes[i]);
 			}
 		}
 		
