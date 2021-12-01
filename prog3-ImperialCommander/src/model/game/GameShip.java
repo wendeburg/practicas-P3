@@ -57,14 +57,16 @@ public class GameShip extends Ship {
 		for (Fighter f : fleet) {
 			if (f != null) {
 				if (!f.isDestroyed()) {
-					if (where.contentEquals("board")) {
-						if (f.getPosition() != null) {
-							list.add(f.getId());
+					if (where != null) {
+						if (where.contentEquals("board")) {
+							if (f.getPosition() != null) {
+								list.add(f.getId());
+							}
 						}
-					}
-					else if (where.contentEquals("ship")) {
-						if (f.getPosition() == null) {
-							list.add(f.getId());
+						else if (where.contentEquals("ship")) {
+							if (f.getPosition() == null) {
+								list.add(f.getId());
+							}
 						}
 					}
 					else {
@@ -106,7 +108,7 @@ public class GameShip extends Ship {
 		f.addAttack(qty/2);
 		
 		if (qty % 2 != 0) {
-			f.addShield(qty/2 + 1);
+			f.addShield((qty/2) + 1);
 		}
 		else {
 			f.addShield(qty/2);

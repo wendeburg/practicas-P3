@@ -1,5 +1,6 @@
 package model.game;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -7,6 +8,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
@@ -37,7 +39,6 @@ public class GameShipPreTest {
 	/* Se comprueba que el constructor copia de GameShip es correcto y que
 	   GameShip es una clase derivada de Ship (no se han duplicado los atributos)
 	 */
-	//TODO
 	@Test
 	public void testGameShip() {
 		assertEquals ("Lanzadera T-4a", gameShip.getName());
@@ -55,7 +56,6 @@ public class GameShipPreTest {
 	/* Se comprueba que isFleetDestroyed devuelve true si no hay cazas en
 	 * la nave.
 	 */
-	//TODO
 	@Test
 	public void testIsFleetDestroyedEmpty() {
 		assertTrue(gameShip.isFleetDestroyed());
@@ -64,20 +64,31 @@ public class GameShipPreTest {
 	/* Añade fighters a un GameShip. Luego destruyelos todos y comprueba que 
 	 * isFleetDestroyed devuelve true.
 	 */
-	//TODO
 	@Test
 	public void testIsFleetDestroyedAllDestroyed() {
-		fail("Realiza el test");
+		gameShip.addFighters("10/TIEFighter:35/TIEInterceptor:5/TIEBomber");
+		
+		for (Fighter f : gameShip.getFleetTest()) {
+			f.addShield(-3000);
+		}
+		
+		assertTrue(gameShip.isFleetDestroyed());
 	}
 	
 	
 	/* Añade cazas a una nave. Destruye todos menos uno y comprueba que 
 	 * isFleetDestroyed() devuelve false
 	 */
-	//TODO
 	@Test
 	public void testIsFleetDestroyedNotAllDestroyed() {
-		fail ("Realiza el test");
+		gameShip.addFighters("10/TIEFighter:35/TIEInterceptor:5/TIEBomber");
+		List<Fighter> fs = gameShip.getFleetTest();
+		
+		for (int i = 0; i < fs.size()-1; i++) {
+			fs.get(i).addShield(-3000);
+		}
+		
+		assertFalse(gameShip.isFleetDestroyed());
 	}
 	
 	/* Se comprueba que se obtiene una lista vacía de una nave sin cazas. Luego se
@@ -101,27 +112,67 @@ public class GameShipPreTest {
 	 * Además comprueba que al invocar a getFightesId("board") se devuelve una lista 
 	 * vacía.
 	 */
-	//TODO
 	@Test
 	public void testGetFightersIdListNotEmpty1()  {
+		List<Integer> correctos = new ArrayList<>();
+		
 		gameShip.addFighters("10/TIEFighter:35/TIEInterceptor:5/TIEBomber");	
-		
 		List<Integer> l = gameShip.getFightersId("ship");
-		fail("Termina el test");
+		List<Integer> l2 = gameShip.getFightersId(null);
 		
+		for (int i = 1; i <= gameShip.getFleetTest().size(); i++) {
+			correctos.add(i);
+		}
+		
+		if (correctos.size() != l.size()) {
+			fail("El tamaño debería de ser el mismo.");
+		}
+		
+		for (int j = 0; j < l.size(); j++) {
+			assertEquals(correctos.get(j), l.get(j));
+		}
+		
+		if (correctos.size() != l2.size()) {
+			fail("El tamaño debería de ser el mismo.");
+		}
+		
+		for (int k = 0; k < l2.size(); k++) {
+			assertEquals(correctos.get(k), l2.get(k));
+		}
+		
+		assertEquals(0, gameShip.getFightersId("board").size());
 	}
 	
 	/* Se añaden cazas a un Ship. Se añaden todos a un tablero. Se comprueba que al invocar a  getFightersId("board") 
 	 * se devuelve una lista con los id de todos los cazas del la nave.
 	 * Además se comprueba que getFightersId("ship") devuelve una lista vacía
 	 */
-	//TODO
 	@Test
 	public void testGetFightersIdListNotEmpty2() throws InvalidSizeException, FighterAlreadyInBoardException, OutOfBoundsException  {
 		gameShip.addFighters("10/TIEFighter:35/TIEInterceptor:5/TIEBomber");	
 		fleet = gameShip.getFleetTest();
 		gameBoard = new GameBoard(fleet.size());
-		fail("Termina el test");
+		List<Integer> correctos = new ArrayList<>();
+
+		for (int i = 0; i < fleet.size(); i++) {
+			gameBoard.launch(new Coordinate(i, 0), fleet.get(i));
+		}
+		
+		List<Integer> l = gameShip.getFightersId("board");
+		
+		for (int i = 1; i <= fleet.size(); i++) {
+			correctos.add(i);
+		}
+		
+		if (correctos.size() != l.size()) {
+			fail("El tamaño debería de ser el mismo.");
+		}
+		
+		for (int j = 0; j < l.size(); j++) {
+			assertEquals(correctos.get(j), l.get(j));
+		}
+		
+		assertEquals(0, gameShip.getFightersId("ship").size());
 	}
 	
 	/* Añade cazas a un Ship. Añade algunos a un tablero. Destruye otros. 
@@ -166,10 +217,13 @@ public class GameShipPreTest {
 	 * fuera del tablero. 
 	 * Comprueba que se lanza la excepción OutOfBoundsException.
 	 */
-	//TODO
-	@Test
-	public void testLaunchOutOfBoundsException() throws InvalidSizeException {
-		fail("Realiza el test");
+	@Test(expected=OutOfBoundsException.class)
+	public void testLaunchOutOfBoundsException() throws InvalidSizeException, FighterAlreadyInBoardException, OutOfBoundsException {
+		gameShip.addFighters("4/TIEFighter:3/TIEInterceptor:6/TIEBomber");
+		
+		gameBoard = new GameBoard(6);
+		
+		gameBoard.launch(new Coordinate(7,7), gameShip.getFleetTest().get(0));
 	}
 	
 	/* Se añaden cazas a un GameShip y se pone a patrullar a uno de ellos en un
@@ -220,7 +274,6 @@ public class GameShipPreTest {
 	 * Se intenta mejorar un id de un caza que no existe. Se comprueba que se lanza la excepción
 	 * WrongFighterIdException y que lanza el mensaje con el inicio de 'ERROR:'
 	 */
-	//TODO
 	@Test
 	public void testImproveFighterExceptions() throws FighterAlreadyInBoardException, OutOfBoundsException, InvalidSizeException {
 		gameShip.addFighters("4/TIEFighter:3/TIEInterceptor:6/TIEBomber");
@@ -231,8 +284,14 @@ public class GameShipPreTest {
 		} catch (WrongFighterIdException e) {
 			fail("ERROR: No debió lanzar la excepción "+e.getClass().getSimpleName());
 		}
-		Fighter f=gameShip.getFleetTest().get(5);
-		fail("Termina de realizar el test");
+		assertEquals(133, gameShip.getFleetTest().get(5).getAttack());
+		assertEquals(109, gameShip.getFleetTest().get(5).getShield());
+		
+		try {
+			gameShip.improveFighter(89, 97, gameBoard);
+		} catch (WrongFighterIdException e) {
+			assertTrue(e.getMessage().startsWith("ERROR:"));
+		}
 	}
 	
 	/* Realiza las comprobaciones de los parámetros null en launch, patrol e improveFighter

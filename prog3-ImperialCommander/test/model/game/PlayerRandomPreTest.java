@@ -99,11 +99,11 @@ public class PlayerRandomPreTest {
 	 */
 	@Test
 	public void testInitFightersImperial() {
-		playerRandomImperial = new PlayerRandom(Side.IMPERIAL,500);
+		PlayerRandom playerRandomImperial = new PlayerRandom(Side.IMPERIAL,500);
 		playerRandomImperial.initFighters();
 
 		assertEquals(920, playerRandomImperial.getGameShip().getFleetTest().size());
-		assertEquals(kIMPERIALGAMESHIP, playerRandomImperial.showShip()); // Es así?
+		assertEquals(kIMPERIALGAMESHIP, playerRandomImperial.getGameShip().toString()); // Es así?
 	}
 
 	/* Para un PlayerRandom sin iniciar (sin cazas en la nave) se comprueba que isFleetDestroyed es true
