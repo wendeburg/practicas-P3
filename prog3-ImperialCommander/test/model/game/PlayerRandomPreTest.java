@@ -136,12 +136,22 @@ public class PlayerRandomPreTest {
 	 * Destruye todos los cazas. Ejecuta purgeFleet(). Comprueba que ahora
 	 * no existe ningún caza en la nave.
 	 */
-	//TODO
 	@Test
 	public void testPurgeFleet() {
 		playerRandom.initFighters();
 		assertEquals(20,playerRandom.getGameShip().getFleetTest().size());
-		fail("Termina el test");
+
+		playerRandom.purgeFleet();
+
+		assertEquals(20,playerRandom.getGameShip().getFleetTest().size());
+
+		for (Fighter f : playerRandom.getGameShip().getFleetTest()) {
+			f.addShield(-3000);
+		}
+
+		playerRandom.purgeFleet();
+
+		assertEquals(0,playerRandom.getGameShip().getFleetTest().size());
 	}
 
 	/* Se inicia playerRandom con cazas en su nave. Se le añade un tablero. 
