@@ -111,7 +111,7 @@ public class PlayerRandom implements IPlayer {
 			ids = ship.getFightersId(null);
 			
 			if (ids.size() == 0) {
-				System.out.println("ERROR: No se han encontrado cazas en la ship.");
+				System.out.println("ERROR: No se han encontrado cazas en la nave.");
 			}
 			else {
 				fighterId = RandomNumber.newRandomNumber(ids.size());
@@ -133,15 +133,16 @@ public class PlayerRandom implements IPlayer {
 				fighterId = RandomNumber.newRandomNumber(ids.size());
 				int x = RandomNumber.newRandomNumber(board.getSize());
 				int y = RandomNumber.newRandomNumber(board.getSize());
+				
 				try {
 					ship.launch(fighterId, new Coordinate(x, y), board);
-				} catch (FighterAlreadyInBoardException | OutOfBoundsException | WrongFighterIdException e) {
+				} catch (FighterAlreadyInBoardException | OutOfBoundsException | WrongFighterIdException e) {				
 					throw new RuntimeException();
 				}
 			}
 		}
-		else if (option >= 0 && option <= 24) {
-			ids = ship.getFightersId("baord");
+		else if (option <= 24) {
+			ids = ship.getFightersId("board");
 			
 			if (ids.size() == 0) {
 				System.out.println("ERROR: No se han encontrado cazas en el tablero.");

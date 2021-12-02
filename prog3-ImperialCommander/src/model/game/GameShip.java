@@ -68,6 +68,9 @@ public class GameShip extends Ship {
 								list.add(f.getId());
 							}
 						}
+						else {
+							list.add(f.getId());
+						}
 					}
 					else {
 						list.add(f.getId());
@@ -83,7 +86,11 @@ public class GameShip extends Ship {
 		Objects.requireNonNull(c);
 		Objects.requireNonNull(b);
 		
-		b.launch(c, getFighter(id));
+		if (!getFighter(id).isDestroyed()) {
+			b.launch(c, getFighter(id));	
+		} else {
+			throw new WrongFighterIdException(id);
+		}
 	}
 
 	public void patrol(int id, Board b) throws FighterNotInBoardException, WrongFighterIdException {

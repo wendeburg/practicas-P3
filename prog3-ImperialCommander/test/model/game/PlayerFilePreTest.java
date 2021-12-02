@@ -7,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -119,7 +120,15 @@ public class PlayerFilePreTest {
 	@Test
 	public void testInitFightersImperial() {
 		inputFighter = "155/TIEInterceptor:210/TIEBomber:170/TIEFighter\nlaunch 1 5\nlaunch 2 2\npatrol 2\nexit\n";
-		fail("Realiza el test");
+		StringReader strReader = new StringReader(inputFighter);
+		BufferedReader buffread = new BufferedReader(strReader);
+		PlayerFile playerImperial = new PlayerFile(Side.IMPERIAL, buffread);
+		
+		playerImperial.initFighters();
+		
+		assertEquals(535, playerImperial.getGameShip().getFleetTest().size());
+		
+		assertEquals(kIMPERIALGAMESHIP, playerImperial.getGameShip().toString());
 	}
 
 	
@@ -162,7 +171,15 @@ public class PlayerFilePreTest {
 		assertEquals(42,playerFile.getGameShip().getFleetTest().size());
 		playerFile.purgeFleet();
 		assertEquals(42,playerFile.getGameShip().getFleetTest().size());
-		fail("Termina el test");
+		
+		List<Fighter> fleet = playerFile.getGameShip().getFleetTest();
+		
+		for (Fighter f : fleet) {
+			f.addShield(-3000);
+		}
+		
+		playerFile.purgeFleet();
+		assertEquals(0,playerFile.getGameShip().getFleetTest().size());
 	}
 	
 	/* Inicia playerFile con cazas en su nave. Añadele un tablero. 
@@ -183,8 +200,9 @@ public class PlayerFilePreTest {
 	
 		playerFile.setBoard(gb);
 		assertTrue (playerFile.nextPlay()); //Pone un caza en el tablero (id=1)
-		assertFalse (playerFile.nextPlay()); //Sale con exit	
-		fail("Comprueba que el caza con id=1 está en el tablero");
+		assertFalse (playerFile.nextPlay()); //Sale con exit
+		
+		assertEquals(1, gb.getFighter(new Coordinate(4, 6)).getId());
 	}
 
 	/* Inicia playerFile con cazas en su nave. Añadele un tablero. 
@@ -203,7 +221,7 @@ public class PlayerFilePreTest {
 	//TODO
 	@Test
 	public void testNextPlay1() {
-		fail("Crea el String inputFighter que realice todas las operaciones indicadas");
+		inputFighter = "10/AWing:25/XWing:7/YWing\nlaunch 4 6\nlaunch 5 6 5\nlaunch 6 7 YWing\nexit";
 		stringReader = new StringReader(inputFighter);
 		br = new BufferedReader(stringReader);
 		playerFile = new PlayerFile(Side.REBEL, br);
@@ -212,7 +230,15 @@ public class PlayerFilePreTest {
 		playerFile.initFighters();
 		playerFile.setBoard(gb);
 		gs = playerFile.getGameShip();
-		fail("Termina el ejercicio");
+		
+		assertTrue(playerFile.nextPlay());
+		assertTrue(playerFile.nextPlay());
+		assertTrue(playerFile.nextPlay());
+		assertFalse(playerFile.nextPlay());
+		
+		assertEquals(1, gb.getFighter(new Coordinate(4, 6)).getId());
+		assertEquals(5, gb.getFighter(new Coordinate(5, 6)).getId());
+		assertEquals(36, gb.getFighter(new Coordinate(6, 7)).getId());
 	}
 	
 	
@@ -228,7 +254,6 @@ public class PlayerFilePreTest {
 	 */
 	@Test
 	public void testNextPlayWithErrorsInImprove() {
-		
 		String s = "10/AWing:25/XWing:7/YWing\nimprove 9\nimprove 4 3 26\nimprove 4 100\nimprove 43 50\nimproves 4 23";
 		stringReader = new StringReader(s);
 		br = new BufferedReader(stringReader);
@@ -256,8 +281,23 @@ public class PlayerFilePreTest {
 	//TODO
 	@Test
 	public void testNextPlayWithErrorsInPatrol() throws FighterAlreadyInBoardException, OutOfBoundsException {
+		String s = "10/AWing:25/XWing:7/YWing\npatrols 4\npatrol 75\npatrol 3\npatrol 4 4\npatrol\nlaunch 4 4 3\nexit";
+		stringReader = new StringReader(s);
+		br = new BufferedReader(stringReader);
+		playerFile = new PlayerFile(Side.REBEL, br);
+		gs = playerFile.getGameShip();
+		playerFile.initFighters();
+		playerFile.setBoard(gb);		
 		
-		fail("Realiza el test");
+		standardIO2Stream(); //Cambiamos la salida estandard a un nuevo stream
+		for (int i=0; i<6; i++)
+			assertTrue (playerFile.nextPlay());
+		
+		assertFalse(playerFile.nextPlay());
+		assertEquals(3, gb.getFighter(new Coordinate(4,4)).getId());
+		
+		String serr = Stream2StandardIO(); //Restauramos la salida estandar a la consola.
+		errorsControl(serr,5); //Comprobamos que serr contiene cinco líneas que empiezan con 'ERROR:'
 	}
 	
 	/* Test de comprobación de los parámetros null en PlayerFile */

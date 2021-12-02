@@ -165,6 +165,9 @@ public class PlayerRandomPreTest {
 		
 		assertTrue (playerRandom.nextPlay()); //Intenta poner a patrullar a un caza
 		assertTrue (playerRandom.nextPlay()); //Pone un caza en el tablero (id=5)
+	
+		
+		
 		checkFighterOnBoard(new Coordinate(4,6), 5);
 	
 		assertTrue (playerRandom.nextPlay()); //Pone un caza en el tablero (id=20)
