@@ -107,9 +107,7 @@ public class PlayerRandom implements IPlayer {
 		if (option == 99) {
 			return false;
 		}
-		else if (option >= 85 && option <= 98) {
-			System.out.println("improve");
-			
+		else if (option >= 85 && option <= 98) {			
 			ids = ship.getFightersId(null);
 			
 			if (ids.size() == 0) {
@@ -126,7 +124,6 @@ public class PlayerRandom implements IPlayer {
 			}
 		}
 		else if (option >= 24 && option <= 84) {
-			System.out.println("launch");
 			ids = ship.getFightersId("ship");
 			
 			if (ids.size() == 0) {
@@ -145,7 +142,6 @@ public class PlayerRandom implements IPlayer {
 			}
 		}
 		else if (option <= 24) {
-			System.out.println("patrol");
 			ids = ship.getFightersId("board");
 			
 			if (ids.size() == 0) {
@@ -153,7 +149,6 @@ public class PlayerRandom implements IPlayer {
 			}
 			else {
 				fighterId = ids.get(RandomNumber.newRandomNumber(ids.size()));
-				System.out.println(fighterId);
 				try {
 					ship.patrol(fighterId, board);
 				} catch (FighterNotInBoardException | WrongFighterIdException e) {
@@ -165,6 +160,4 @@ public class PlayerRandom implements IPlayer {
 		
 		return true;
 	}
-	
-	
 }
