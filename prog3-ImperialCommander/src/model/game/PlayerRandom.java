@@ -108,13 +108,15 @@ public class PlayerRandom implements IPlayer {
 			return false;
 		}
 		else if (option >= 85 && option <= 98) {
+			System.out.println("improve");
+			
 			ids = ship.getFightersId(null);
 			
 			if (ids.size() == 0) {
 				System.out.println("ERROR: No se han encontrado cazas en la nave.");
 			}
 			else {
-				fighterId = RandomNumber.newRandomNumber(ids.size());
+				fighterId = ids.get(RandomNumber.newRandomNumber(ids.size()));
 				try {
 					ship.improveFighter(fighterId, option, board);
 				} catch (WrongFighterIdException e) {
@@ -124,13 +126,14 @@ public class PlayerRandom implements IPlayer {
 			}
 		}
 		else if (option >= 24 && option <= 84) {
+			System.out.println("launch");
 			ids = ship.getFightersId("ship");
 			
 			if (ids.size() == 0) {
 				System.out.println("ERROR: No se han encontrado cazas que no estuvieran ya en el tablero.");
 			}
 			else {
-				fighterId = RandomNumber.newRandomNumber(ids.size());
+				fighterId = ids.get(RandomNumber.newRandomNumber(ids.size()));
 				int x = RandomNumber.newRandomNumber(board.getSize());
 				int y = RandomNumber.newRandomNumber(board.getSize());
 				
@@ -142,16 +145,19 @@ public class PlayerRandom implements IPlayer {
 			}
 		}
 		else if (option <= 24) {
+			System.out.println("patrol");
 			ids = ship.getFightersId("board");
 			
 			if (ids.size() == 0) {
 				System.out.println("ERROR: No se han encontrado cazas en el tablero.");
 			}
 			else {
-				fighterId = RandomNumber.newRandomNumber(ids.size());
+				fighterId = ids.get(RandomNumber.newRandomNumber(ids.size()));
+				System.out.println(fighterId);
 				try {
 					ship.patrol(fighterId, board);
 				} catch (FighterNotInBoardException | WrongFighterIdException e) {
+					System.out.println(e.getMessage());
 					throw new RuntimeException();
 				}
 			}

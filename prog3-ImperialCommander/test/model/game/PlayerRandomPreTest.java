@@ -192,7 +192,7 @@ public class PlayerRandomPreTest {
 		while (playerRandom.nextPlay())
 			n++;
 		assertEquals(105,n);
-		compareLines(kNEXTPLAYMANYTIMES1,gb.toString() );
+		compareLines(kNEXTPLAYMANYTIMES1,gb.toString());
 	}
 	
 	/* Realiza el test de comprobación de los parámetros null en PlayerRandom del constructor y de setBoard */

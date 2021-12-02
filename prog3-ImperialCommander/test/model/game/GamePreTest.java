@@ -105,7 +105,6 @@ public class GamePreTest {
 	 * el que gana es IMPERIAL y que la salida de play coincide con el resultado solución que
 	 * está en el fichero "files/testPlayEmptyRebelShip.out"
 	 */
-	//TODO
 	@Test
 	public void testPlayEmptyRebelShip() {
 		String inputImp = "1/TIEInterceptor\nlaunch 1 1";
@@ -131,7 +130,7 @@ public class GamePreTest {
 	 *  están en el setUp() */
 	@Test
 	public void testPlayMain1() {
-		//standardIO2Stream();
+		standardIO2Stream();
 		Side winner = game.play();
 		
 		String sout = Stream2StandardIO(); //Cambia salida standard a un Stream
@@ -149,7 +148,7 @@ public class GamePreTest {
 	//TODO
 	@Test
 	public void testPlayMain2() {
-		fail("Realiza el test del MainP4");
+		fail("Arreglar PlayerRandom primero.");
 	}
 	
 	/*Test como MainP4min, IMPERIAL hace exit 
