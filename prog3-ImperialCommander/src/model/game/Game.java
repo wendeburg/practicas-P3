@@ -30,7 +30,7 @@ public class Game {
 		}
 	}
 	
-	public GameBoard etGameBoard() {
+	public GameBoard getGameBoard() {
 		return board;
 	}
 	
