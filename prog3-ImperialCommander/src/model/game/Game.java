@@ -43,50 +43,56 @@ public class Game {
 	public Side play() {
 		boolean hasGameFinished = false;
 		boolean isImperialWinner = false;
-		boolean isImperialTurn = true;
 		boolean playResult;
+		
 		imperial.initFighters();
 		rebel.initFighters();
 		
 		while (!hasGameFinished) {
-			if (isImperialTurn) {
-				System.out.println("BEFORE IMPERIAL");
-				
-				System.out.println(board.toString());
-				System.out.println(imperial.getGameShip().toString());
-				System.out.println(rebel.getGameShip().toString());
-				
-				playResult = imperial.nextPlay();
-				
-				if (playResult == false || imperial.isFleetDestroyed()) {
-					hasGameFinished = true;
-					isImperialWinner = false;
-				}
-				else {
-					System.out.print("IMPERIAL(" + getNumFighters(imperial.getGameShip()) + "): ");
-					System.out.println("AFTER IMPERIAL, BEFORE REBEL");
-					System.out.println(board.toString());
-					System.out.println(imperial.getGameShip().toString());
-					System.out.println(rebel.getGameShip().toString());
-					isImperialTurn = false;
-				}
+			System.out.println("BEFORE IMPERIAL");
+			
+			System.out.println(board.toString());
+			System.out.println(imperial.showShip());
+			System.out.print(rebel.showShip() + "\n");
+			
+			System.out.print("IMPERIAL(" + getNumFighters(imperial.getGameShip()) + "): ");
+			
+			playResult = imperial.nextPlay();
+			
+			if (playResult == false) {
+				hasGameFinished = true;
+				isImperialWinner = false;
+				break;
 			}
-			else {
-				playResult = rebel.nextPlay();
-				
-				if (playResult == false || rebel.isFleetDestroyed()) {
-					hasGameFinished = true;
-					isImperialWinner = true;
-				}
-				else {
-					System.out.print("REBEL(" + getNumFighters(rebel.getGameShip()) + "): ");
-					System.out.println("AFTER REBEL");
-					System.out.println(board.toString());
-					System.out.println(imperial.getGameShip().toString());
-					System.out.println(rebel.getGameShip().toString());
-					isImperialTurn = true;	
-				}
+			
+			System.out.println("AFTER IMPERIAL, BEFORE REBEL");
+			System.out.println(board.toString());
+			System.out.println(imperial.showShip());
+			System.out.print(rebel.showShip() + "\n");
+			
+			if (rebel.isFleetDestroyed() || imperial.isFleetDestroyed()) {
+				hasGameFinished = true;
+				isImperialWinner = imperial.isFleetDestroyed()? false : true;
+				break;
 			}
+			
+			System.out.print("REBEL(" + getNumFighters(rebel.getGameShip()) + "): ");
+			
+			playResult = rebel.nextPlay();
+			
+			if (playResult == false) {
+				hasGameFinished = true;
+				isImperialWinner = true;
+				break;
+			}
+			
+			System.out.println("AFTER REBEL");
+			System.out.println(board.toString());
+			System.out.println(imperial.showShip());
+			System.out.print(rebel.showShip() + "\n");
+		
+			imperial.purgeFleet();
+			rebel.purgeFleet();
 		}
 		
 		if (isImperialWinner) {

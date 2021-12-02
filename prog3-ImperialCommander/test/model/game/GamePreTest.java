@@ -96,6 +96,8 @@ public class GamePreTest {
 		String sout = Stream2StandardIO(); //Cambia salida de Stream a la consola
 		assertEquals(Side.REBEL, winner);
 		String solution = readSolutionFromFile("files/testPlayEmptyShips.out");
+		
+		System.out.println(sout);
 		compareLines(solution, sout, false);
 	}
 	

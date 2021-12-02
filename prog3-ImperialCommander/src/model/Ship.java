@@ -102,6 +102,7 @@ public class Ship {
 	public void addFighters(String fd) {
 		Objects.requireNonNull(fd);
 		
+		Fighter f;
 		String strings[] = fd.split(":");
 		
 		for (int i = 0; i < strings.length; i++) {
@@ -110,7 +111,10 @@ public class Ship {
 			int numFighters = Integer.parseInt(stringParts[0]);
 			
 			for (int j = 0; j < numFighters; j++) {
-				fleet.add(FighterFactory.createFighter(stringParts[1], this));
+				f = FighterFactory.createFighter(stringParts[1], this);
+				if (f != null) {
+					fleet.add(f);
+				}
 			}
 		}
 	}
