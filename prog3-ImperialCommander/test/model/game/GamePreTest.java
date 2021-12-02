@@ -97,7 +97,6 @@ public class GamePreTest {
 		assertEquals(Side.REBEL, winner);
 		String solution = readSolutionFromFile("files/testPlayEmptyShips.out");
 		
-		System.out.println(sout);
 		compareLines(solution, sout, false);
 	}
 	
@@ -117,10 +116,12 @@ public class GamePreTest {
 		String inputRebel = "";
 		StringReader stringReader2 = new StringReader(inputRebel);
 		BufferedReader br2 = new BufferedReader(stringReader2);
-		PlayerFile plfRebel = new PlayerFile(Side.IMPERIAL, br2);
+		PlayerFile plfRebel = new PlayerFile(Side.REBEL, br2);
 		
         Game gameTest = new Game(plfImperial, plfRebel);
 
+        standardIO2Stream(); // para ocultar la salida.
+        
         assertEquals(Side.IMPERIAL, gameTest.play());
 	}
 	
@@ -130,7 +131,7 @@ public class GamePreTest {
 	 *  están en el setUp() */
 	@Test
 	public void testPlayMain1() {
-		standardIO2Stream();
+		//standardIO2Stream();
 		Side winner = game.play();
 		
 		String sout = Stream2StandardIO(); //Cambia salida standard a un Stream
