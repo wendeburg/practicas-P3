@@ -105,15 +105,17 @@ public class Ship {
 		Fighter f;
 		String strings[] = fd.split(":");
 		
-		for (int i = 0; i < strings.length; i++) {
-			String stringParts[] = strings[i].split("/");
-			
-			int numFighters = Integer.parseInt(stringParts[0]);
-			
-			for (int j = 0; j < numFighters; j++) {
-				f = FighterFactory.createFighter(stringParts[1], this);
-				if (f != null) {
-					fleet.add(f);
+		if (strings.length > 0 && !fd.isEmpty()) {
+			for (int i = 0; i < strings.length; i++) {
+				String stringParts[] = strings[i].split("/");
+				
+				int numFighters = Integer.parseInt(stringParts[0]);
+				
+				for (int j = 0; j < numFighters; j++) {
+					f = FighterFactory.createFighter(stringParts[1], this);
+					if (f != null) {
+						fleet.add(f);
+					}
 				}
 			}
 		}

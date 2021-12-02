@@ -114,7 +114,14 @@ public class GamePreTest {
 		BufferedReader br = new BufferedReader(stringReader);
 		plfImperial = new PlayerFile(Side.IMPERIAL, br);
 		
-		fail("Termina el test");
+		String inputRebel = "";
+		StringReader stringReader2 = new StringReader(inputRebel);
+		BufferedReader br2 = new BufferedReader(stringReader2);
+		PlayerFile plfRebel = new PlayerFile(Side.IMPERIAL, br2);
+		
+        Game gameTest = new Game(plfImperial, plfRebel);
+
+        assertEquals(Side.IMPERIAL, gameTest.play());
 	}
 	
 	/* Game del MainP4min.

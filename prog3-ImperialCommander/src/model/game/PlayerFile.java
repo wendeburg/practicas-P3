@@ -56,7 +56,12 @@ public class PlayerFile implements IPlayer {
 	public void initFighters() {
 		try {
 			String fighters = br.readLine();
-			ship.addFighters(fighters);
+			if (fighters == null) {
+				ship.addFighters("");
+			}
+			else {
+				ship.addFighters(fighters);
+			}
 		} catch (IOException e) {
 			throw new RuntimeException();
 		}
