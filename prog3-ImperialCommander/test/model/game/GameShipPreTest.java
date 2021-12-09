@@ -240,7 +240,6 @@ public class GameShipPreTest {
 		
 		
 		if (correctosGeneral.size() != general.size()) {
-			System.out.println(general.size());
 			fail("Deberían tener el mismo tamaño.");
 		}
 		
@@ -249,6 +248,18 @@ public class GameShipPreTest {
 		}
 
 		
+	}
+	
+	@Test
+	public void testGetFightersIdInOrder() {
+		gameShip.addFighters("10/TIEFighter:35/TIEInterceptor:5/TIEBomber");
+		List<Integer> l = gameShip.getFightersId(null);
+		
+		for (int i = 1; i < l.size(); i++) {
+			if (!(i == l.get(i-1))) {
+				fail("deberian estar en orden.");
+			}
+		}
 	}
 	
 	/* Añade cazas a un GameShip e intenta poner uno, con launch, con una id que no existe. 

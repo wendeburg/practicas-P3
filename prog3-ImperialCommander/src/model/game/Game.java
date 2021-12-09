@@ -93,6 +93,12 @@ public class Game {
 		
 			imperial.purgeFleet();
 			rebel.purgeFleet();
+			
+			if (rebel.isFleetDestroyed() || imperial.isFleetDestroyed()) {
+				hasGameFinished = true;
+				isImperialWinner = imperial.isFleetDestroyed()? false : true;
+				break;
+			}
 		}
 		
 		if (isImperialWinner) {

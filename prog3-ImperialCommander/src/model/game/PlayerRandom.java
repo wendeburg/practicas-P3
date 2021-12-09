@@ -123,7 +123,7 @@ public class PlayerRandom implements IPlayer {
 				
 			}
 		}
-		else if (option >= 24 && option <= 84) {
+		else if (option > 24 && option <= 84) {
 			ids = ship.getFightersId("ship");
 			
 			if (ids.size() == 0) {
