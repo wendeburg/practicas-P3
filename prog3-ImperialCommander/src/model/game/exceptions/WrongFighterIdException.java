@@ -1,7 +1,7 @@
 package model.game.exceptions;
 
 /**
- * Excepción FWrongFighterIdException.
+ * Excepción WrongFighterIdException.
  * @author Francisco Wendeburg - Y8281851W.
  */
 @SuppressWarnings("serial")

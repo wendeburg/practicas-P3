@@ -13,11 +13,30 @@ import model.game.GameBoard;
 import model.game.GameShip;
 import model.game.exceptions.WrongFighterIdException;
 
+/**
+ * Clase PlayerRandom: Jugador cuyas jugadas son aleatorias.
+ * @author Francisco Wendeburg - Y8281851W.
+ */
 public class PlayerRandom implements IPlayer {
+	/**
+	 * Número de cazas que tiene el jugador.
+	 */
 	private int numFighters;
+	/**
+	 * Nave del jugador.
+	 */
 	private GameShip ship;
+	
+	/**
+	 * Board donde se desarrolla la partida.
+	 */
 	private GameBoard board;
 	
+	/**
+	 * Constructor de PlayerRandom.
+	 * @param side Side del jugador (de su nave).
+	 * @param numFighters número de cazas que va a tener la nave del jugador.
+	 */
 	public PlayerRandom(Side side, int numFighters) {
 		Objects.requireNonNull(side);
 		
@@ -47,7 +66,7 @@ public class PlayerRandom implements IPlayer {
 
 	@Override
 	public GameShip getGameShip() {
-		return ship; // Es copia defensiva??
+		return ship;
 	}
 
 	@Override

@@ -6,13 +6,36 @@ import java.util.Objects;
 import model.Side;
 import model.exceptions.InvalidSizeException;
 
+/**
+ * Clase Game: gestiona una partida entre un jugador imperial y otro rebelde.
+ * @author Francisco Wendeburg - Y8281851W.
+ */
 public class Game {
+	/**
+	 * El tamaño del tablero con el que se juega.
+	 */
 	private static final int BOARD_SIZE = 10;
+	
+	/**
+	 * El tablero con el que se juega.
+	 */
 	private GameBoard board;
+	
+	/**
+	 * Jugador rebelde.
+	 */
 	private IPlayer rebel;
+
+	/**
+	 * Jugador imperial.
+	 */
 	private IPlayer imperial;
 	
-	
+	/**
+	 * Consutructor que guarda en sus atributos los jugadores que se le pasan como parámetro.
+	 * @param imperial jugador imperial.
+	 * @param rebel jugador rebelde.
+	 */
 	public Game(IPlayer imperial, IPlayer rebel) {
 		Objects.requireNonNull(imperial);
 		Objects.requireNonNull(rebel);
@@ -30,16 +53,29 @@ public class Game {
 		}
 	}
 	
+	/**
+	 * Devuelve el GameBoard (para pruebas unitarias).
+	 * @return el GameBoard del juego.
+	 */
 	public GameBoard getGameBoard() {
 		return board;
 	}
 	
+	/**
+	 * Devuelve el número de Fighters dentro de un determinado GameShip.
+	 * @param s el GameShip del que se quiere obtener el número de Fighters dentro.
+	 * @return entero con el número de Fighters dentro del GameShip.
+	 */
 	private int getNumFighters(GameShip s) {
 		List<Integer> fs = s.getFightersId("board");
 		
 		return fs.size();
 	}
 	
+	/**
+	 * Gestiona la partida entre ambos jugadores.
+	 * @return el Side (imperial/rebel) ganador.
+	 */
 	public Side play() {
 		boolean hasGameFinished = false;
 		boolean isImperialWinner = false;

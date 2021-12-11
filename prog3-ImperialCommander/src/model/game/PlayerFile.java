@@ -12,12 +12,32 @@ import model.exceptions.NoFighterAvailableException;
 import model.exceptions.OutOfBoundsException;
 import model.game.exceptions.WrongFighterIdException;
 
+/**
+ * Clase PlayerFile: Jugador que lee sus juagdas de un buffer.
+ * @author Francisco Wendeburg - Y8281851W.
+ */
 public class PlayerFile implements IPlayer {
-
+	
+	/**
+	 * Buffer de donde se leen las jugadas.
+	 */
 	private BufferedReader br;
+	
+	/**
+	 * Nave del jugador.
+	 */
 	private GameShip ship;
+	
+	/**
+	 * Board donde se desarrolla la partida.
+	 */
 	private GameBoard board;
 	
+	/**
+	 * Constructor de PlayerFile.
+	 * @param side Side del jugador (de su nave).
+	 * @param br buffer de donde se leen las instrucciones.
+	 */
 	public PlayerFile(Side side, BufferedReader br) {
 		Objects.requireNonNull(side);
 		Objects.requireNonNull(br);
@@ -49,7 +69,7 @@ public class PlayerFile implements IPlayer {
 
 	@Override
 	public GameShip getGameShip() {
-		return ship; // Es copia defensiva??
+		return ship;
 	}
 
 	@Override

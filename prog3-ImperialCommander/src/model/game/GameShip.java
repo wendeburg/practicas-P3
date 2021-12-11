@@ -14,12 +14,25 @@ import model.exceptions.FighterNotInBoardException;
 import model.exceptions.OutOfBoundsException;
 import model.game.exceptions.WrongFighterIdException;
 
+/**
+ * Clase GameShip: subclase de Game para gestionar una nave en el juego.
+ * @author Francisco Wendeburg - Y8281851W.
+ */
 public class GameShip extends Ship {
-
+	
+	/**
+	 * Constructor que llama al constructor de la clase padre.
+	 * @param name nombre de la nave.
+	 * @param side Side (imperial/rebel) de la nave.
+	 */
 	public GameShip(String name, Side side) {
 		super(name, side);
 	}
 	
+	/**
+	 * Comprueba si la flota del caza se ha destruido o no.
+	 * @return true si la flota del caza está destruida o no quedan cazas, false en otro caso.
+	 */
 	public boolean isFleetDestroyed() {
 		for (Fighter f : fleet) {
 			if (f != null) {
@@ -32,6 +45,12 @@ public class GameShip extends Ship {
 		return true;
 	}
 	
+	/**
+	 * Busca en la flota de la nave un caza cuyo identificador coincida con el argumento id.
+	 * @param id identificador del caza que se quiere encontrar.
+	 * @return una referencia al caza con el ID pasado como parámetro.
+	 * @throws WrongFighterIdException se lanza cuando no se encuentra un caza con ese ID.
+	 */
 	private Fighter getFighter(int id) throws WrongFighterIdException {
 		boolean foundFighter = false;
 		
@@ -51,6 +70,11 @@ public class GameShip extends Ship {
 		return null;
 	}
 	
+	/**
+	 * Devuelve una lista con los identificadores de los cazas (no destruidos) de la flota de la nave.
+	 * @param where donde se quieren buscar los cazas. "ship" dentro de la nave, "board" en el tablero, cualqueir otra cosa todos los cazas.
+	 * @return una lista de enteros con los IDs de los cazas encontrados.
+	 */
 	public List<Integer> getFightersId(String where) {
 		List<Integer> list = new ArrayList<>();
 		
@@ -82,6 +106,15 @@ public class GameShip extends Ship {
 		return list;
 	}
 	
+	/**
+	 * Lanza el caza indicado por el ID en el tablero.
+	 * @param id identificador del caza a lanzar en el tablero.
+	 * @param c coordenada donde se va a lanzar el caza.
+	 * @param b tablero en donde se va a lanzar el caza.
+	 * @throws FighterAlreadyInBoardException se lanza cuando el caza con el id pasado como parámetro ya esta en el tablero.
+	 * @throws OutOfBoundsException se lanza cuando la coordenada pasada ocmo paŕametro no está dentro del tablero. 
+	 * @throws WrongFighterIdException se lanza cuando el caza con el id pasado como parámetro no existe.
+	 */
 	public void launch(int id, Coordinate c, Board b) throws FighterAlreadyInBoardException, OutOfBoundsException, WrongFighterIdException {
 		Objects.requireNonNull(c);
 		Objects.requireNonNull(b);
@@ -93,12 +126,26 @@ public class GameShip extends Ship {
 		}
 	}
 
+	/**
+	 * Pone a patrullar el caza indicado por el ID.
+	 * @param id identificador del caza que se quiere poner a patrullar.
+	 * @param b tablero en donde se quiere poner a patrullar el caza.
+	 * @throws FighterNotInBoardException se lanza cuando el caza que se quiere poner a patrullar no está en el tablero.
+	 * @throws WrongFighterIdException se lanza cuando el caza con el id pasado como parámetro no existe.
+	 */
 	public void patrol(int id, Board b) throws FighterNotInBoardException, WrongFighterIdException {
 		Objects.requireNonNull(b);
 		
 		b.patrol(getFighter(id));
 	}
 	
+	/**
+	 * Mejora los atributos del caza. Mitad de qty para ataque y mitad para escudo. Si el caza está en el tablero se saca del tablero.
+	 * @param id identificador del caza que se quiere mejorar.
+	 * @param qty cantidad que se quiere mejorar el caza.
+	 * @param b tablero donde se encuentra el caza que se queire mejorar.
+	 * @throws WrongFighterIdException se lanza cuando el caza con el id pasado como parámetro no existe.
+	 */
 	public void improveFighter(int id, int qty, Board b) throws WrongFighterIdException {
 		Objects.requireNonNull(b);
 		
@@ -110,7 +157,6 @@ public class GameShip extends Ship {
 		catch (FighterNotInBoardException e) {
 			// No se hace nada.
 		}
-
 		
 		f.addAttack(qty/2);
 		
@@ -121,5 +167,4 @@ public class GameShip extends Ship {
 			f.addShield(qty/2);
 		}
 	}
-
 }
