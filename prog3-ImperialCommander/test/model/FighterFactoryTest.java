@@ -1,14 +1,20 @@
 package model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import model.exceptions.NoFighterAvailableException;
-import model.fighters.*;
+import model.fighters.AWing;
+import model.fighters.TIEBomber;
+import model.fighters.TIEFighter;
+import model.fighters.TIEInterceptor;
+import model.fighters.XWing;
+import model.fighters.YWing;
 
-public class FighterFactoryPreTest {
+public class FighterFactoryTest {
 	Fighter fighter;
 	Ship ship;
 	@Before

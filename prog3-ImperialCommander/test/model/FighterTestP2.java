@@ -1,16 +1,19 @@
 package model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import model.exceptions.FighterAlreadyInBoardException;
 import model.exceptions.FighterIsDestroyedException;
-import model.exceptions.FighterNotInBoardException;
-import model.exceptions.OutOfBoundsException;
 
-public class FighterPreTestP2 {
+public class FighterTestP2 {
 
 	private final int kInitVelocity = 100;
 	private final int kInitAttack = 80;

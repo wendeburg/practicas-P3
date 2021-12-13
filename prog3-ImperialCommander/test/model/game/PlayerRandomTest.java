@@ -1,6 +1,10 @@
 package model.game;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,17 +13,13 @@ import model.Coordinate;
 import model.Fighter;
 import model.RandomNumber;
 import model.Side;
-import model.exceptions.FighterAlreadyInBoardException;
-import model.exceptions.FighterNotInBoardException;
-import model.exceptions.InvalidSizeException;
-import model.exceptions.OutOfBoundsException;
-import model.game.exceptions.WrongFighterIdException;
 
-public class PlayerRandomPreTest {
+public class PlayerRandomTest {
 
 	IPlayer playerRandom;
 	GameShip gs;
 	GameBoard gb;
+	final String kEMPTYGAMESHIP = "Ship [PlayerRandom REBEL Ship 0/0]";
 	final String kREBELGAMESHIP = "Ship [PlayerRandom REBEL Ship 0/0] 5/XWing:8/YWing:7/AWing";
 	final String kIMPERIALGAMESHIP = "Ship [PlayerRandom IMPERIAL Ship 0/0] 485/TIEFighter:88/TIEBomber:347/TIEInterceptor";
 	final String kSHOWSHIP ="Ship [PlayerRandom REBEL Ship 0/0] 5/XWing:8/YWing:7/AWing\n" + 
@@ -43,7 +43,6 @@ public class PlayerRandomPreTest {
 			"(AWing 18 REBEL null {140,85,30})\n" + 
 			"(AWing 19 REBEL null {140,85,30})\n" + 
 			"(AWing 20 REBEL null {140,85,30})";
-	
 	final String kNEXTPLAYMANYTIMES1  =   "0123456789\n" + 
 			"			  ----------\n" + 
 			"			  0|    A    Y\n" + 
@@ -56,7 +55,18 @@ public class PlayerRandomPreTest {
 			"			  7|  Y      X\n" + 
 			"			  8|     A  Y \n" + 
 			"			  9|  Y    X  ";
-	
+	final String kNEXTPLAYMANYTIMES2 = "  0123456789\n" + 
+			"  ----------\n" + 
+			"0|    ff   b\n" + 
+			"1|        i \n" + 
+			"2| if ff f f\n" + 
+			"3| b      ii\n" + 
+			"4|     i    \n" + 
+			"5|  if  ffff\n" + 
+			"6|ff  fbi  i\n" + 
+			"7|  b   if  \n" + 
+			"8|     i  fb\n" + 
+			"9|f i  fffi ";
 	@Before
 	public void setUp() throws Exception {
 		playerRandom = new PlayerRandom(Side.REBEL,10);
@@ -67,22 +77,28 @@ public class PlayerRandomPreTest {
 
 	/* 
 	 * Se crea un PlayerRandom (en el setUp) y se comprueba que el GameShip que se crea
-	 * es del bando REBEL y que el nombre es correcto. 
-	 * Comprueba que el objeto playerRandom es una instancia de IPlayer.
+	 * es del bando REBEL y que el nombre es correcto. Además se comprueba que el objeto
+	 * playerRandom es una instancia de IPlayer.
 	 */
 	@Test
 	public void testPlayerRandom() {
 		gs = playerRandom.getGameShip();
 		assertEquals(Side.REBEL,gs.getSide());
 		assertEquals("PlayerRandom REBEL Ship", gs.getName());
-
-		if (!(playerRandom instanceof IPlayer)) {
-			fail("PlayerRandom debe ser una instancia de IPlayer.");
-		}
+		assertTrue (playerRandom instanceof IPlayer);
 	}
 
+	
+	@Test
+	public void testInitFightersWithoutFighters() {
+		playerRandom = new PlayerRandom(Side.REBEL,1);
+		playerRandom.initFighters();
+		gs = playerRandom.getGameShip();
+		assertEquals(0,gs.getFleetTest().size());
+		compareLines(kEMPTYGAMESHIP, playerRandom.getGameShip().toString());
+	}
 
-	/* Se comprueba initFighters() para playerRandom. Para ello se constata que el fleet del GameShip asociado 
+	/* Se comprueba initFighters() para playerRandom. Para ello se comprueba que el fleet del GameShip asociado 
 	 * tiene 20 cazas y que el ship es correcto (coincide con kREBELGAMESHIP)
 	 */
 	@Test
@@ -93,17 +109,17 @@ public class PlayerRandomPreTest {
 		compareLines(kREBELGAMESHIP, playerRandom.getGameShip().toString());
 	}
 	
-	/* Crea un PlayerRandom Imperial, con numSize de 500. Invoca a initFighters() y
-	 * comprueba que el fleet del GameShip asociado tiene 920 cazas y
+	/* Se crea un PlayerRandom Imperial, con numSize de 500. Se invoca a initFighters() y
+	 * se comprueba que el fleet del GameShip asociado tiene 920 cazas y
 	 * que el ship es correcto (coincide con kIMPERIALGAMESHIP)
 	 */
 	@Test
 	public void testInitFightersImperial() {
-		PlayerRandom playerRandomImperial = new PlayerRandom(Side.IMPERIAL,500);
-		playerRandomImperial.initFighters();
-
-		assertEquals(920, playerRandomImperial.getGameShip().getFleetTest().size());
-		assertEquals(kIMPERIALGAMESHIP, playerRandomImperial.getGameShip().toString()); // Es así?
+		playerRandom = new PlayerRandom(Side.IMPERIAL,500);
+		playerRandom.initFighters();
+		gs = playerRandom.getGameShip();
+		assertEquals(920,gs.getFleetTest().size());
+		compareLines(kIMPERIALGAMESHIP, playerRandom.getGameShip().toString());
 	}
 
 	/* Para un PlayerRandom sin iniciar (sin cazas en la nave) se comprueba que isFleetDestroyed es true
@@ -133,30 +149,27 @@ public class PlayerRandomPreTest {
 
 	/* Comprueba purgeFleet() con un playerRandom con toda la flota de su nave intacta.
 	 * El número de cazas debe coincidir con el que tenía antes de hacer purgeFleet.
-	 * Destruye todos los cazas. Ejecuta purgeFleet(). Comprueba que ahora
+	 * Se destruyen todos los cazas. Se ejecuta purgeFleet(). Se comprueba que ahora
 	 * no existe ningún caza en la nave.
 	 */
 	@Test
 	public void testPurgeFleet() {
 		playerRandom.initFighters();
 		assertEquals(20,playerRandom.getGameShip().getFleetTest().size());
-
 		playerRandom.purgeFleet();
-
 		assertEquals(20,playerRandom.getGameShip().getFleetTest().size());
-
-		for (Fighter f : playerRandom.getGameShip().getFleetTest()) {
-			f.addShield(-3000);
+		
+		for (Fighter f: playerRandom.getGameShip().getFleetTest()) {
+			f.addShield(-300);
 		}
-
 		playerRandom.purgeFleet();
-
-		assertEquals(0,playerRandom.getGameShip().getFleetTest().size());
+		assertEquals(0,playerRandom.getGameShip().getFleetTest().size());	
 	}
 
 	/* Se inicia playerRandom con cazas en su nave. Se le añade un tablero. 
 	 * Se invoca a nextPlay() varias veces de tal forma que entra en todas
 	 * las opciones (excepto exit). 
+	 * 
 	 */
 	@Test
 	public void testNextPlaySeveralTimes() {
@@ -165,9 +178,6 @@ public class PlayerRandomPreTest {
 		
 		assertTrue (playerRandom.nextPlay()); //Intenta poner a patrullar a un caza
 		assertTrue (playerRandom.nextPlay()); //Pone un caza en el tablero (id=5)
-	
-		
-		
 		checkFighterOnBoard(new Coordinate(4,6), 5);
 	
 		assertTrue (playerRandom.nextPlay()); //Pone un caza en el tablero (id=20)
@@ -192,21 +202,35 @@ public class PlayerRandomPreTest {
 		while (playerRandom.nextPlay())
 			n++;
 		assertEquals(105,n);
-		compareLines(kNEXTPLAYMANYTIMES1,gb.toString());
+		compareLines(kNEXTPLAYMANYTIMES1,gb.toString() );
 	}
 	
-	/* Realiza el test de comprobación de los parámetros null en PlayerRandom del constructor y de setBoard */
+	/* Tras crear un playerRandom imperial con numSize de 500, e iniciarlo con cazas y asignarles un tablero de 10x10, 
+	 * se invoca repetidamente nextPlay() hasta que retorne false. Se comprueba que el número de veces que se ejecutó 
+	 * es 83. Y además que el tablero con sus cazas coincide con el de kNEXTPLAYMANYTIMES2
+	 */
+	@Test
+	public void testNextPlayManyTimes2() {
+		playerRandom = new PlayerRandom(Side.IMPERIAL,500);
+		playerRandom.initFighters();
+		playerRandom.setBoard(gb);
+		int n=0;
+		while (playerRandom.nextPlay())
+			n++;
+		assertEquals(83,n);
+		compareLines(kNEXTPLAYMANYTIMES2,gb.toString() );
+	}
+	
+	/* Test de comprobación de los parámetros null en PlayerRandom */
 	@Test
 	public void testRequireNonNull()  {
-		PlayerRandom p = new PlayerRandom(Side.REBEL, 1);
-
+		
 		try {
-			PlayerRandom p2 = new PlayerRandom(null, 1);
+			new PlayerRandom(null,10);
 			fail("ERROR: Debió lanzar NullPointerException");
 		}catch (NullPointerException e) {}
 		try {
-			p.setBoard(null);
-			fail("ERROR: Debió lanzar NullPointerException");
+			playerRandom.setBoard(null);
 		}catch (NullPointerException e) {}
 	}
 
@@ -221,12 +245,12 @@ public class PlayerRandomPreTest {
 		if (exp.length!=res.length) 
 			fail("Cadena esperada de tamaño ("+exp.length+") distinto a la resultante ("+res.length+")");
 		for (int i=0; i<exp.length && iguales; i++) {
-			 
+			 if (! exp[i].contains("Action by")) {
 				 assertEquals("linea "+i, exp[i].trim(),res[i].trim());
+			 }
 		}
 	}
 	
-	//Comprueba que el Fighter con id n está en el tablero en la coordenada c
 	private void checkFighterOnBoard(Coordinate c, int n) {
 		Fighter fighter = gb.getFighter(c);
 		assertNotNull(fighter);
