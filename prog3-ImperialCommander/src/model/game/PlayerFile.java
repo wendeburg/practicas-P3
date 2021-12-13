@@ -181,7 +181,7 @@ public class PlayerFile implements IPlayer {
 								id = ship.getFirstAvailableFighter(StrArr[3]).getId();
 								ship.launch(id, new Coordinate(x, y), board);
 							} catch (NoFighterAvailableException | FighterAlreadyInBoardException | OutOfBoundsException | WrongFighterIdException e1) {
-								System.out.println("ERROR " + e.getMessage());
+								System.out.println("ERROR: " + e.getMessage());
 							}
 						}
 						catch (FighterAlreadyInBoardException | OutOfBoundsException | WrongFighterIdException e) {
