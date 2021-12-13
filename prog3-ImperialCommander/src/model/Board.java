@@ -164,7 +164,7 @@ public class Board {
 		}
 		else if (c.getX() == 0 && c.getY() == size-1) { // Esq. inf. izq.
 			for (i = 0; i < 2; i++) {
-				for (j = c.getY(); j < c.getY() -2; j--) {
+				for (j = c.getY(); j > c.getY() -2; j--) {
 	    			if (!(j == c.getY() && i == 0)) {
 	    				tree.add(new Coordinate(i, j));
 	    			}
@@ -172,7 +172,7 @@ public class Board {
 			}
 		}
 		else if (c.getX() == size-1 && c.getY() == 0) { // Esq. sup. der.
-			for (i = 0; i < 2; i++) {
+			for (i = c.getX(); i < c.getX()-2; i--) {
 				for (j = 0; j < 2; j++) {
 	    			if (!(j == 0 && i == 0)) {
 	    				tree.add(new Coordinate(i, j));
