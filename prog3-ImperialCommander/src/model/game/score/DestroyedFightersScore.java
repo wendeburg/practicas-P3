@@ -18,7 +18,8 @@ public class DestroyedFightersScore extends Score<Fighter> {
 	 * @param sc Fighter del cual se obtiene la puntuación.
 	 */
 	public void score(Fighter sc) {
-		// Objects.RequireNonNull?
-		score = score + sc.getValue();
+		if (sc != null) {
+			score = score + sc.getValue();	
+		}
 	}
 }

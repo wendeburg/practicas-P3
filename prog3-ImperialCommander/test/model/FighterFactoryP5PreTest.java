@@ -1,5 +1,6 @@
 package model;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -14,7 +15,7 @@ import model.fighters.TIEInterceptor;
 import model.fighters.XWing;
 import model.fighters.YWing;
 
-public class FighterFactoryTest {
+public class FighterFactoryP5PreTest {
 	Fighter fighter;
 	Ship ship;
 	@Before
@@ -58,5 +59,12 @@ public class FighterFactoryTest {
 		}catch (NullPointerException e) {}
 	}
 	
+	/* Se comprueba que FighterFactory.createFighter admite nuevos Fighters sin tener
+	 * que modificar el código
+	 */
+	@Test
+	public void testCreateSuperFighter() {
+		assertNotNull(FighterFactory.createFighter("SuperFighter", ship));	
+	}
 
 }

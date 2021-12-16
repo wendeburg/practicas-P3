@@ -21,8 +21,10 @@ public class WinsScore extends Score<Integer> {
 	 * @param sc valor entero.
 	 */
 	public void score(Integer sc) {
-		if (sc == 1) {
-			score++;
+		if (sc != null) {
+			if (sc == 1) {
+				score++;
+			}
 		}
 	}
 }
