@@ -308,6 +308,10 @@ public abstract class Fighter {
 		return true;
 	}
 	
+	/**
+	 * Devuelve el valor del Fighter.
+	 * @return la suma de la velocidad y el ataque del Fighter.
+	 */
 	public int getValue() {
 		return velocity + attack;
 	}

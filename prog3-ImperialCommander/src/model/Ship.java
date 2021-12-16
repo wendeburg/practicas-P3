@@ -125,6 +125,7 @@ public class Ship {
 	 * Sume 1 a las victorias si r = 1, suma uno a las derrotas si r = -1,
 	 * no hace nada con cualquier otro valor.
 	 * @param r resultado de una batalla.
+	 * @param f Fighter que ha sido destruido en la batalla.
 	 */
 	public void updateResults(int r, Fighter f) {
 		// Objects.requireNonNull(f);

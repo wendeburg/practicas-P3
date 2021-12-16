@@ -75,6 +75,9 @@ public class Game {
 		return fs.size();
 	}
 	
+	/**
+	 * Obtiene y muestra los ranking de la partida.
+	 */
 	private void showRankings() {
 		Ranking<WinsScore> winsRanking = new Ranking<>();
 		Ranking<DestroyedFightersScore> destroyedRanking = new Ranking<>();

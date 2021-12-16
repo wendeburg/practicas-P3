@@ -175,10 +175,18 @@ public class GameShip extends Ship {
 		}
 	}
 	
+	/**
+	 * Devuelve la puntuación de victorias de la nave.
+	 * @return el WinsScore de la nave.
+	 */
 	public WinsScore getWinsScore() {
 		return winsScore;
 	}
 	
+	/**
+	 * Devuelve la puntuación de Fighters destruidos de la nave.
+	 * @return el DestroyedFightersScore de la nave.
+	 */
 	public DestroyedFightersScore getDestroyedFightersScore() {
 		return destroyedFightersScore;
 	}

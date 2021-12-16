@@ -48,7 +48,15 @@ public interface IPlayer {
 	 */
 	public boolean nextPlay();
 	
+	/**
+	 * Devuelve el WinsScore de la nave del jugador.
+	 * @return la puntuación de victorias de la nave del jugador.
+	 */
 	public WinsScore getWinsScore();
 	
+	/**
+	 * Devuelve el DestroyedFightersScore de la nave del jugador.
+	 * @return la puntuación de Fighters destruidos de la nave del jugador.
+	 */
 	public DestroyedFightersScore getdestroyedFightersScore();
 }

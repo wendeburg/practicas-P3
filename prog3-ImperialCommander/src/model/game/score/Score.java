@@ -2,20 +2,43 @@ package model.game.score;
 
 import model.Side;
 
+/**
+ * Clase Score: Crea un sistema de calificación para la partida.
+ * @author Francisco Wendeburg - Y8281851W.
+ */
 public abstract class Score<T> implements Comparable<Score<T>> {
+	/**
+	 * Puntuación.
+	 */
 	protected int score;
+	
+	/**
+	 * Side del que se lleva la contabilidad del score.
+	 */
 	private Side side;
 	
+	/**
+	 * Constructor.
+	 * @param side Side del que se va a llevar la contabilidad del score.
+	 */
 	public Score(Side side) {
 		score = 0;
 		this.side = side;
 	}
 	
+	/**
+	 * Getter.
+	 * @return devuelve la puntuación.
+	 */
 	public int getScore() {
 		return score;
 	}
 	
 	@Override
+	/**
+	 * Convierte una instancia de la clase en su representación como String.
+	 * @return devuelve la representación de la clase como String.
+	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		
@@ -34,6 +57,10 @@ public abstract class Score<T> implements Comparable<Score<T>> {
 	}
 	
 	@Override
+	/**
+	 * Compara dos puntuaciones por su valor.
+	 * @param other puntuación con la que se quiere comparar.
+	 */
 	public int compareTo(Score<T> other) {
 		if (this.score > other.score) {
 			return -1;
