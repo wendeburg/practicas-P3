@@ -308,6 +308,9 @@ public abstract class Fighter {
 		return true;
 	}
 	
+	public int getValue() {
+		return velocity + attack;
+	}
 	
 	/**
 	 * Hace una copia defensiva del caza sobre el que se llama al método.

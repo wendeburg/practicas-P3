@@ -1,5 +1,8 @@
 package model.game;
 
+import model.game.score.DestroyedFightersScore;
+import model.game.score.WinsScore;
+
 /**
  * Interfaz IPlayer: Interfaz que modela un jugador del juego. Contiene los métodos necesarios para jugar.
  * @author Francisco Wendeburg - Y8281851W.
@@ -44,4 +47,8 @@ public interface IPlayer {
 	 * @return true si el jugador sigue jugando, false si se va de la partida (exit).
 	 */
 	public boolean nextPlay();
+	
+	public WinsScore getWinsScore();
+	
+	public DestroyedFightersScore getdestroyedFightersScore();
 }

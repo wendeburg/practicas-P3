@@ -235,8 +235,8 @@ public class Board {
     			if (!(board.get(c).getSide() == f.getSide())) {
     				try {
 						if (f.fight(board.get(c)) == 1) {
-							f.getMotherShip().updateResults(1);
-							board.get(c).getMotherShip().updateResults(-1);
+							f.getMotherShip().updateResults(1, board.get(c));
+							board.get(c).getMotherShip().updateResults(-1, board.get(c));
 							removeFighter(board.get(c));
 							board.put(c, f);
 							f.setPosition(c);
@@ -244,8 +244,8 @@ public class Board {
 							return 1;
 						}
 						else {
-							f.getMotherShip().updateResults(-1);
-							board.get(c).getMotherShip().updateResults(1);
+							f.getMotherShip().updateResults(-1, f);
+							board.get(c).getMotherShip().updateResults(1, f);
 							
 							return -1;
 						}
@@ -327,13 +327,13 @@ public class Board {
 							throw new RuntimeException();
 						}
     	   				if (fightResult == 1) {
-        					f.getMotherShip().updateResults(1);
-        					board.get(c).getMotherShip().updateResults(-1);
+        					f.getMotherShip().updateResults(1, board.get(c));
+        					board.get(c).getMotherShip().updateResults(-1, board.get(c));
         	    			removeFighter(board.get(c));
         				}
     	   				else if (fightResult == -1){
-        					f.getMotherShip().updateResults(-1);
-        					board.get(c).getMotherShip().updateResults(1);
+        					f.getMotherShip().updateResults(-1, f);
+        					board.get(c).getMotherShip().updateResults(1, f);
         					removeFighter(f);
     	   				}
     				}

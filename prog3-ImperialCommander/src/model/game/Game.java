@@ -5,6 +5,9 @@ import java.util.Objects;
 
 import model.Side;
 import model.exceptions.InvalidSizeException;
+import model.game.score.DestroyedFightersScore;
+import model.game.score.Ranking;
+import model.game.score.WinsScore;
 
 /**
  * Clase Game: gestiona una partida entre un jugador imperial y otro rebelde.
@@ -72,6 +75,20 @@ public class Game {
 		return fs.size();
 	}
 	
+	private void showRankings() {
+		Ranking<WinsScore> winsRanking = new Ranking<>();
+		Ranking<DestroyedFightersScore> destroyedRanking = new Ranking<>();
+		
+		winsRanking.addScore(imperial.getWinsScore());
+		winsRanking.addScore(rebel.getWinsScore());
+		
+		destroyedRanking.addScore(imperial.getdestroyedFightersScore());
+		destroyedRanking.addScore(rebel.getdestroyedFightersScore());
+		
+		System.out.println("RANKING WINS: " + winsRanking.toString());
+		System.out.println("RANKING DESTROYED: " + destroyedRanking.toString());
+	}
+	
 	/**
 	 * Gestiona la partida entre ambos jugadores.
 	 * @return el Side (imperial/rebel) ganador.
@@ -85,6 +102,8 @@ public class Game {
 		rebel.initFighters();
 		
 		while (!hasGameFinished) {
+			showRankings();
+			
 			System.out.println("BEFORE IMPERIAL");
 			
 			System.out.println(board.toString());
@@ -136,6 +155,8 @@ public class Game {
 				break;
 			}
 		}
+		
+		showRankings();
 		
 		if (isImperialWinner) {
 			return Side.IMPERIAL;

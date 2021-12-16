@@ -13,12 +13,16 @@ import model.exceptions.FighterAlreadyInBoardException;
 import model.exceptions.FighterNotInBoardException;
 import model.exceptions.OutOfBoundsException;
 import model.game.exceptions.WrongFighterIdException;
+import model.game.score.DestroyedFightersScore;
+import model.game.score.WinsScore;
 
 /**
  * Clase GameShip: subclase de Game para gestionar una nave en el juego.
  * @author Francisco Wendeburg - Y8281851W.
  */
 public class GameShip extends Ship {
+	private DestroyedFightersScore destroyedFightersScore;
+	private WinsScore winsScore;
 	
 	/**
 	 * Constructor que llama al constructor de la clase padre.
@@ -27,6 +31,9 @@ public class GameShip extends Ship {
 	 */
 	public GameShip(String name, Side side) {
 		super(name, side);
+		
+		destroyedFightersScore = new DestroyedFightersScore(side);
+		winsScore = new WinsScore(side);
 	}
 	
 	/**
@@ -165,6 +172,24 @@ public class GameShip extends Ship {
 		}
 		else {
 			f.addShield(qty/2);
+		}
+	}
+	
+	public WinsScore getWinsScore() {
+		return winsScore;
+	}
+	
+	public DestroyedFightersScore getDestroyedFightersScore() {
+		return destroyedFightersScore;
+	}
+	
+	@Override
+	public void updateResults(int r, Fighter f) {
+		super.updateResults(r, f);
+		
+		if (r == 1) {
+			winsScore.score(r);
+			destroyedFightersScore.score(f);
 		}
 	}
 }

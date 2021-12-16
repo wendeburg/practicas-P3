@@ -126,11 +126,12 @@ public class Ship {
 	 * no hace nada con cualquier otro valor.
 	 * @param r resultado de una batalla.
 	 */
-	public void updateResults(int r) {
+	public void updateResults(int r, Fighter f) {
+		// Objects.requireNonNull(f);
 		if (r == 1) wins++;
 		if (r == -1) losses++;
 	}
-	
+
 	/**
 	 * Devuelve un caza no destruido.
 	 * @param type tipo del caza que se quiere.

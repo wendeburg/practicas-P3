@@ -12,6 +12,8 @@ import model.exceptions.OutOfBoundsException;
 import model.game.GameBoard;
 import model.game.GameShip;
 import model.game.exceptions.WrongFighterIdException;
+import model.game.score.DestroyedFightersScore;
+import model.game.score.WinsScore;
 
 /**
  * Clase PlayerRandom: Jugador cuyas jugadas son aleatorias.
@@ -178,5 +180,15 @@ public class PlayerRandom implements IPlayer {
 		}
 		
 		return true;
+	}
+	
+	@Override
+	public WinsScore getWinsScore() {
+		return ship.getWinsScore();
+	}
+	
+	@Override
+	public DestroyedFightersScore getdestroyedFightersScore() {
+		return ship.getDestroyedFightersScore();
 	}
 }
