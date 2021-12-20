@@ -65,8 +65,10 @@ import model.game
 	public void testCompareTo() {
 		assertTrue(scRebel.compareTo(scRebel)==0);
 		assertTrue(scRebel.compareTo(scImperial)>0);
-		fail("Termina el test");
 		
+		scImperial.score(aWing);
+		assertTrue(scRebel.compareTo(scImperial)>0);
+		assertTrue(scImperial.compareTo(scRebel)<0);
 	}
 
 	/* Se pasan varios Fighters sucesivamente al DestroyedFighterScore scImperial mediante
@@ -79,8 +81,10 @@ import model.game
 		assertEquals(0,scImperial.getScore());
 		scImperial.score(xWing);
 		assertEquals(210,scImperial.getScore());
-		fail("Sigue aplicando score a scImperial con varios Fighters y comprobando "
-				+ "que los valores son correctos");
+		scImperial.score(yWing);
+		assertEquals(360,scImperial.getScore());
+		scImperial.score(aWing);
+		assertEquals(585,scImperial.getScore());
 	}
 
 
@@ -92,7 +96,7 @@ import model.game
 	//TODO
 	@Test
 	public void testToString() {
-			
+		//Rebel.
 		compareLines ("Player REBEL: 0",scRebel.toString());
 	
 		scRebel.score(tieBomber);
@@ -100,8 +104,21 @@ import model.game
 
 		scRebel.score(tieFighter);
 		compareLines ("Player REBEL: 295",scRebel.toString());
+		
+		scRebel.score(tieInterceptor);
+		compareLines ("Player REBEL: 525",scRebel.toString());
 
-		fail("Continúa con el test");	
+		// Imeperial.
+		compareLines ("Player IMPERIAL: 0",scImperial.toString());
+		
+		scImperial.score(aWing);
+		compareLines ("Player IMPERIAL: 225",scImperial.toString());
+
+		scImperial.score(xWing);
+		compareLines ("Player IMPERIAL: 435",scImperial.toString());
+		
+		scImperial.score(yWing);
+		compareLines ("Player IMPERIAL: 585",scImperial.toString());
 	}
 	
 	/*************************
