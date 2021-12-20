@@ -137,7 +137,7 @@ public class RankingPreTest {
 		assertEquals(destroyedScoreReb, destroyedRanking.getWinner());
 		
 		for (int i=0; i<2000; i++) {
-			destroyedScore.score(FighterFactory.createFighter(kIMPERIAL_FIGHTERS[i%2], rebelShip));
+			destroyedScore.score(FighterFactory.createFighter(kREBEL_FIGHTERS[i%2], rebelShip));
 		}
 		
 		assertEquals(winsScoreReb, winsRanking.getWinner());
