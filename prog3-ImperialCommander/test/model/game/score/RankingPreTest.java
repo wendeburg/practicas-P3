@@ -123,7 +123,7 @@ public class RankingPreTest {
 		destroyedRanking.addScore(destroyedScore);
 		winsRanking.addScore(winsScore);
 		
-		//Iniciamos marcadores para Rebeñ
+		//Iniciamos marcadores para Rebel
 		WinsScore winsScoreReb = new WinsScore(Side.REBEL);
 		DestroyedFightersScore destroyedScoreReb = new DestroyedFightersScore(Side.REBEL);
 		for (int i=0; i<2001; i++) {
@@ -139,7 +139,6 @@ public class RankingPreTest {
 		for (int i=0; i<2000; i++) {
 			destroyedScore.score(FighterFactory.createFighter(kIMPERIAL_FIGHTERS[i%2], rebelShip));
 		}
-		destroyedRanking.addScore(destroyedScore);
 		
 		assertEquals(winsScoreReb, winsRanking.getWinner());
 		System.out.println(destroyedScore.toString() + " " + destroyedScoreReb.toString());
