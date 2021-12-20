@@ -75,8 +75,23 @@ public class RankingPreTest {
 		}
 		destroyedRanking.addScore(destroyedScore);
 		winsRanking.addScore(winsScore);
-		fail ("Continúa con el test ahora para Rebel y haz la comprobación");
 		
+		WinsScore winsScoreReb = new WinsScore(Side.REBEL);
+		DestroyedFightersScore destroyedScoreReb = new DestroyedFightersScore(Side.REBEL);
+		for (int i=0; i<9; i++) {
+			winsScoreReb.score(1);
+		}
+		for (int i=0; i<7; i++) {
+			destroyedScoreReb.score(FighterFactory.createFighter("TIEInterceptor", imperialShip));
+		}
+		for (int i=0; i<8; i++) {
+			destroyedScoreReb.score(FighterFactory.createFighter("TIEFighter", imperialShip));
+			destroyedScoreReb.score(FighterFactory.createFighter("TIEBomber", imperialShip));
+		}
+		destroyedRanking.addScore(destroyedScoreReb);
+		winsRanking.addScore(winsScoreReb);
+		
+		compareLines(SRANKING2, rankingsToString());
 	}
 	
 	/* GetWinner debe lanzar RuntimeException cuando el ranking está vacío.
@@ -108,7 +123,29 @@ public class RankingPreTest {
 		destroyedRanking.addScore(destroyedScore);
 		winsRanking.addScore(winsScore);
 		
-		fail("Realiza algo parecido para REBEL y luego haz las comprobaciones finales con getWinner");
+		//Iniciamos marcadores para Rebeñ
+		WinsScore winsScoreReb = new WinsScore(Side.REBEL);
+		DestroyedFightersScore destroyedScoreReb = new DestroyedFightersScore(Side.REBEL);
+		for (int i=0; i<2001; i++) {
+			winsScoreReb.score(1);
+			destroyedScoreReb.score(FighterFactory.createFighter(kIMPERIAL_FIGHTERS[i%2], imperialShip));
+		}
+		destroyedRanking.addScore(destroyedScoreReb);
+		winsRanking.addScore(winsScoreReb);
+		
+		assertEquals(winsScoreReb, winsRanking.getWinner());
+		assertEquals(destroyedScoreReb, destroyedRanking.getWinner());
+		
+		for (int i=0; i<2000; i++) {
+			destroyedScore.score(FighterFactory.createFighter(kIMPERIAL_FIGHTERS[i%2], rebelShip));
+		}
+		destroyedRanking.addScore(destroyedScore);
+		
+		assertEquals(winsScoreReb, winsRanking.getWinner());
+		System.out.println(destroyedScore.toString() + " " + destroyedScoreReb.toString());
+		System.out.println(destroyedRanking.getSortedRanking());
+		
+		assertEquals(destroyedScore, destroyedRanking.getWinner());
 	}
 
 	
