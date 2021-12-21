@@ -128,25 +128,16 @@ public class RankingPreTest {
 		DestroyedFightersScore destroyedScoreReb = new DestroyedFightersScore(Side.REBEL);
 		for (int i=0; i<2001; i++) {
 			winsScoreReb.score(1);
+		}
+		for (int i=0; i < 200; i++) {
 			destroyedScoreReb.score(FighterFactory.createFighter(kIMPERIAL_FIGHTERS[i%2], imperialShip));
 		}
 		destroyedRanking.addScore(destroyedScoreReb);
 		winsRanking.addScore(winsScoreReb);
 		
 		assertEquals(winsScoreReb, winsRanking.getWinner());
-		assertEquals(destroyedScoreReb, destroyedRanking.getWinner());
-		
-		// Ahora se añade más score al DestroyedFightersScore de IMPERIAL.
-		for (int i=0; i<2000; i++) {
-			destroyedScore.score(FighterFactory.createFighter(kREBEL_FIGHTERS[i%2], rebelShip));
-		}
-		
-		System.out.println(destroyedScore.toString() + " " + destroyedScoreReb.toString());
-		System.out.println(destroyedRanking.getSortedRanking());
-		
-		// Debería devolver destroyedScore de IMPERIAl ya que ahora tiene más puntos.
-		assertEquals(destroyedScore, destroyedRanking.getWinner());
-	}
+		assertEquals(destroyedScore, destroyedRanking.getWinner());	
+}
 
 	
 	/*************************
