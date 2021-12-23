@@ -174,7 +174,7 @@ public class Board {
 		else if (c.getX() == size-1 && c.getY() == 0) { // Esq. sup. der.
 			for (i = c.getX(); i > c.getX()-2; i--) {
 				for (j = 0; j < 2; j++) {
-	    			if (!(j == 0 && i == 0)) {
+	    			if (!(j == 0 && i == size-1)) {
 	    				tree.add(new Coordinate(i, j));
 	    			}
 				}
