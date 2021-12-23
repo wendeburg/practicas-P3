@@ -6,6 +6,7 @@ import java.util.TreeSet;
 /**
  * Clase DestroyedFightersScore: Representa una puntuación basada en Fighter y suma el valor de los diferentes cazas destruidos por la nave del jugador.
  * @author Francisco Wendeburg - Y8281851W.
+ * @param <ScoreType> Tipo de score (DestroyedFighterScore o WinsScore).
  */
 public class Ranking <ScoreType extends Score<?>> {
 	/**

@@ -21,7 +21,14 @@ import model.game.score.WinsScore;
  * @author Francisco Wendeburg - Y8281851W.
  */
 public class GameShip extends Ship {
+	/**
+	 * Score de los cazas destruidos por la nave.
+	 */
 	private DestroyedFightersScore destroyedFightersScore;
+	
+	/**
+	 * Score de vicotrias de la nave.
+	 */
 	private WinsScore winsScore;
 	
 	/**

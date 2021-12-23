@@ -3,6 +3,10 @@ package model.game.score;
 import model.Fighter;
 import model.Side;
 
+/**
+ * Clase DestroyedFightersScore: Clase que lleva cuenta del score de cazas destruidos.
+ * @author Francisco Wendeburg - Y8281851W.
+ */
 public class DestroyedFightersScore extends Score<Fighter> {
 	/**
 	 * Constructor.

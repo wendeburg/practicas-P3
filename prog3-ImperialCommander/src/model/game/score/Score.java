@@ -5,6 +5,7 @@ import model.Side;
 /**
  * Clase Score: Crea un sistema de calificación para la partida.
  * @author Francisco Wendeburg - Y8281851W.
+ * @param <T> Tipo de score (Integer/Fighter).
  */
 public abstract class Score<T> implements Comparable<Score<T>> {
 	/**
@@ -73,5 +74,9 @@ public abstract class Score<T> implements Comparable<Score<T>> {
 		}
 	}
 	
+	/**
+	 * Añade el valor de al score.
+	 * @param sc valor que se va a agregar al score.
+	 */
 	public abstract void score(T sc);
 }
