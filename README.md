@@ -1,4 +1,4 @@
-# Prácticas de Programación 3.
+# Prácticas de Programación 3
 
 Repositorio para las prácticas de la asignatura Programación 3 (2021-2022).
 
